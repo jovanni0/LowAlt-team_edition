@@ -60,8 +60,12 @@ public abstract class Flight
     /// calculates the proce of a ticket
     /// </summary>
     public abstract double GetSeatPrice();
-    
-    
+
+    public override string ToString()
+    {
+        return
+            $"Id Zbor: {FlightId}\nRuta: {Route}\nOra de plecare: {DepartureTime}\nDurata Zbor: {FlightTime} minute\nLocuri: {Seats}\nLocuri disponibile: {AvailableSeats}";
+    }
     
     
     
