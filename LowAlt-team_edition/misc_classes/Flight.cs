@@ -10,7 +10,7 @@ public abstract class Flight
     /// <summary>
     /// the route the flight will do
     /// </summary>
-    public string Route { get; init; }
+    public Ruta Route { get; init; }
 
     /// <summary>
     /// the departure time, in HH:mm
@@ -34,7 +34,7 @@ public abstract class Flight
 
     public List<Reservation> Reservations { get; init; }
 
-    public Flight(string flightId, string route, TimeOnly departureTime, int flightTime, int seats, int availableSeats)
+    public Flight(string flightId, Ruta route, TimeOnly departureTime, int flightTime, int seats, int availableSeats)
     {
         FlightId = flightId;
         Route = route;
@@ -60,4 +60,10 @@ public abstract class Flight
     /// calculates the proce of a ticket
     /// </summary>
     public abstract double GetSeatPrice();
+    
+    
+    
+    
+    
+    
 }
