@@ -15,9 +15,9 @@ public class Company
     /// <summary>
     /// the routes if the company
     /// </summary>
-    public List<Route> Routes { get; set; }
+    public List<Ruta> Routes { get; set; }
 
-    public Company(string name, List<Flight> fleet, List<Route> routes)
+    public Company(string name, List<Flight> fleet, List<Ruta> routes)
     {
         Name = name;
         Fleet = fleet;

@@ -1,4 +1,4 @@
-using LowAlt_team_edition.services;
+using LowAlt_team_edition.misc_classes;
 
 namespace LowAlt_team_edition.misc_classes;
 
@@ -7,7 +7,7 @@ public class Reservation
     /// <summary>
     /// the owner of the reservations
     /// </summary>
-    public Passanger Owner { get; init; }
+    public Passenger Owner { get; init; }
 
     /// <summary>
     /// the flight containing the reserved seats
@@ -24,7 +24,7 @@ public class Reservation
     /// </summary>
     public double Price { get; init; }
 
-    public Reservation(Passanger owner, Flight targetFlight, int seats)
+    public Reservation(Passenger owner, Flight targetFlight, int seats)
     {
         Owner = owner;
         TargetFlight = targetFlight;
