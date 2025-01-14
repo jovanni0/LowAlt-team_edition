@@ -12,4 +12,9 @@ public class InternationalFlight : Flight
     {
         return 200 + Route.Km;
     }
+
+    public override string ToString()
+    {
+        return $"*** International ***\n {base.ToString()}";
+    }
 }

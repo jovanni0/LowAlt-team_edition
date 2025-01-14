@@ -64,7 +64,7 @@ public abstract class Flight
     public override string ToString()
     {
         return
-            $"Id Zbor: {FlightId}\nRuta: {Route}\nOra de plecare: {DepartureTime}\nDurata Zbor: {FlightTime} minute\nLocuri: {Seats}\nLocuri disponibile: {AvailableSeats}";
+            $"ID Zbor: {FlightId}\nRuta: {Route}\nOra de plecare: {DepartureTime}\nDurata Zbor: {FlightTime} minute\nLocuri: {Seats}\nLocuri disponibile: {AvailableSeats}";
     }
     
     
