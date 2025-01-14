@@ -17,6 +17,6 @@ public class Ruta
 
     public override string ToString()
     {
-        return $"{OrasPlecare} -> {OrasDestinatie} ({Km} km)";
+        return $"ID Ruta: {IDRuta} | {OrasPlecare} -> {OrasDestinatie} ({Km} km)";
     }
 }

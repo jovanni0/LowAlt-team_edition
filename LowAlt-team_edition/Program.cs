@@ -1,5 +1,4 @@
 ﻿using LowAlt_team_edition.misc_classes;
-using LowAlt_team_edition.services;
 
 namespace LowAlt_team_edition;
 
@@ -43,5 +42,19 @@ class Program
         );
         var accountWriterService = new AccountWriterService("data/newaccounts.txt");
         accountWriterService.WriteAccountToFile(account);
+        Console.WriteLine("Hello, World!");
+        List<Flight> ZboruriTest = new List<Flight>
+        {
+            new LocalFlight("Eu23",new Ruta("Brasov","Budapesta",200,"I2"),new TimeOnly(15,30),120,30,10),
+            new InternationalFlight("A23",new Ruta("Timisoara","Bucuresti",160,"I3"),new TimeOnly(15,30),120,30,1)
+            
+        };
+        Passenger pasagerTest = new Passenger("065373234583", "user3", new List<Reservation>(), false);
+
+        RezervariPasageri testfuctieafisare = new RezervariPasageri(pasagerTest, ZboruriTest);
+        testfuctieafisare.InteractiunePasageri();
+        
+        
+       
     }
 }

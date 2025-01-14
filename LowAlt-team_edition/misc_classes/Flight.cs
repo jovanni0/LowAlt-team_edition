@@ -10,17 +10,17 @@ public abstract class Flight
     /// <summary>
     /// the route the flight will do
     /// </summary>
-    public Ruta Route { get; init; }
+    public Ruta Route { get; set; }
 
     /// <summary>
     /// the departure time, in HH:mm
     /// </summary>
-    public TimeOnly DepartureTime { get; init; }
+    public TimeOnly DepartureTime { get; set; }
 
     /// <summary>
     /// the duration of the flight in minutes
     /// </summary>
-    public int FlightTime { get; init; }
+    public int FlightTime { get; set; }
 
     /// <summary>
     /// the number of seats of the plane
@@ -30,7 +30,7 @@ public abstract class Flight
     /// <summary>
     /// the number of empty seats
     /// </summary>
-    public int AvailableSeats { get; init; }
+    public int AvailableSeats { get; set; }
 
     public List<Reservation> Reservations { get; init; }
 
@@ -60,8 +60,12 @@ public abstract class Flight
     /// calculates the proce of a ticket
     /// </summary>
     public abstract double GetSeatPrice();
-    
-    
+
+    public override string ToString()
+    {
+        return
+            $"ID Zbor: {FlightId}\nRuta: {Route}\nOra de plecare: {DepartureTime}\nDurata Zbor: {FlightTime} minute\nLocuri: {Seats}\nLocuri disponibile: {AvailableSeats}";
+    }
     
     
     
