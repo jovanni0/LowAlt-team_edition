@@ -35,7 +35,7 @@ public class Reservation
 
     public override string ToString()
     {
-        return Owner.Username + " " + TargetFlight + " " + Seats + " seats";
+        return Owner.Username + " " + TargetFlight + "\n Locuri rezervate:"+ Seats + " seats";
     }
 
 }
