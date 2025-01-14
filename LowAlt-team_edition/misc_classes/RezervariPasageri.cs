@@ -13,15 +13,74 @@ public class RezervariPasageri
         _pasager = pasager;
         _listaZboruri = listaZboruri;
     }
+
+    public void  InteractiunePasageri()
+    {
+        while (true)
+        {
+            Console.Clear();
+            string optiune;
+            if (_pasager.IsLoggedIn == false)
+            {
+                Console.WriteLine("Buna ziua! Se pare ca nu sunteti conectat la un cont.");
+                Console.WriteLine("Optiuni disponibile:\n(1): Parasire program\n(2): Vizualizare lista zboruri disponibile");
+                Console.WriteLine("Selectati optiunea dorita: ");
+                optiune = Console.ReadLine() ?? " ";
+
+                switch (optiune)
+                {
+                    case "1": return;
+                    case "2":ZboruriDisponibile();
+                        Console.ReadLine();
+                        break;
+                    default: Console.WriteLine("Optiunea introdusa nu exista!\nIncercati sa introduceti o alta optiune.");
+                        Console.ReadLine();
+                        continue;
+                    
+                }
+                
+                
+            }
+            else
+            {
+                Console.WriteLine($"Buna ziua, {_pasager.Username}");
+                Console.WriteLine("Optiuni disponibile:\n(1): Parasire program\n(2): Vizualize lista zboruri disponibile\n(3): Rezervare locuri zbor\n(4): Anulare rezervare\n(5): Vizualizare istoric rezervari proprii");
+                Console.WriteLine("Selectati optiunea dorita: ");
+                optiune = Console.ReadLine() ?? " ";
+
+                switch (optiune)
+                {
+                    case "1": return;
+                    case "2": ZboruriDisponibile();
+                        Console.ReadLine();
+                        break;
+                    case "3": RezervareLocuri();
+                        Console.ReadLine();
+                        break;
+                    case "4": StergereRezervare();
+                        Console.ReadLine();
+                        break;
+                    case "5": AfisareRezervari();
+                        Console.ReadLine();
+                        break;
+                    default: Console.WriteLine("Ne pare rau, dar optiunea introdusa nu exista!\nIncercati sa introduceti o alta optiune.");
+                        Console.ReadLine();
+                        continue;
+                }
+            }
+        }
+    }
+    
+    
     
 /// <summary>
 /// afisare zboruri disponibile
 /// </summary>
-    public void ZboruriDisponibile()
+    private void ZboruriDisponibile()
     {
-        int i = -1;
         
         Console.Clear();
+        int i = -1;
         Console.WriteLine("Zborurile disponibile sunt: ");
         foreach (Flight zbor in _listaZboruri)
         {
@@ -38,7 +97,7 @@ public class RezervariPasageri
 /// <summary>
 /// Rezervare locuri pentru un zbor
 /// </summary>
-    public void RezervareLocuri()
+    private void RezervareLocuri()
     {
         while (true)
         {
@@ -98,6 +157,7 @@ public class RezervariPasageri
             _listaZboruri[nrZborIntreg].AddReservation(new Reservation(_pasager,_listaZboruri[nrZborIntreg], numarLocuriInt));
             _listaZboruri[nrZborIntreg].AvailableSeats -= numarLocuriInt;
             Console.WriteLine("Rezervarea a fost creata cu succes!");
+            Console.WriteLine($"Total plata: {new Reservation(_pasager,_listaZboruri[nrZborIntreg], numarLocuriInt).Price} RON");
             break;
 
         }
@@ -108,7 +168,7 @@ public class RezervariPasageri
 /// <summary>
 /// Afisarea rezervarilor anterioare ale utilizatorului
 /// </summary>
-    public void AfisareRezervari()
+    private void AfisareRezervari()
     {
         int i = -1;
         
@@ -133,7 +193,7 @@ public class RezervariPasageri
 /// <summary>
 /// Stergerea unei rezervari facute anterior
 /// </summary>
-    public void StergereRezervare()
+    private void StergereRezervare()
     {
         while (true)
         {
