@@ -5,10 +5,10 @@ public class FlightManagement
     private List<Flight> lista_zboruri;
     private List<Ruta> lista_rute;
 
-    public FlightManagement()
+    public FlightManagement(List<Flight> zboruri, List<Ruta> rute)
     {
-        lista_zboruri = new List<Flight>();
-        lista_rute = new List<Ruta>();
+        lista_zboruri = zboruri;
+        lista_rute = rute;
     }
 
     public void AdagareRuta(Ruta ruta)

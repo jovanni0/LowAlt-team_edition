@@ -9,10 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="command_line/" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="data/routes.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>

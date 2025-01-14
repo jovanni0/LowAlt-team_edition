@@ -14,7 +14,7 @@ public class RezervariPasageri
         _listaZboruri = listaZboruri;
     }
 
-    public void  InteractiunePasageri()
+    public void InteractiunePasageri()
     {
         while (true)
         {
@@ -36,10 +36,7 @@ public class RezervariPasageri
                     default: Console.WriteLine("Optiunea introdusa nu exista!\nIncercati sa introduceti o alta optiune.");
                         Console.ReadLine();
                         continue;
-                    
                 }
-                
-                
             }
             else
             {
