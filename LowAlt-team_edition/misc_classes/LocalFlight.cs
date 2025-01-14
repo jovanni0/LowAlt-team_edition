@@ -12,4 +12,9 @@ public class LocalFlight : Flight
     {
         return 50 + (0.5 * Route.Km);
     }
+    
+    public override string ToString()
+    {
+        return $"*** Local ***\n {base.ToString()}";
+    }
 }
