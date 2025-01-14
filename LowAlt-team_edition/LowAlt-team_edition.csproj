@@ -10,8 +10,17 @@
 
     <ItemGroup>
       <Folder Include="command_line/" />
-      <Folder Include="data/" />
-      <Folder Include="services/" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="data/routes.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data/accounts.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="data/flights.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 </Project>

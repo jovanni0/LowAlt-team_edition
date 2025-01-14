@@ -1,0 +1,3 @@
+FLIGHT_TYPE FLIGHT_ID ROUTE_ID DEPARTURE_TIME FLIGHT_TIME SEATS AVAILABLE_SEATS
+-------------------------------------------------------------------------------
+local RO101 01 10:20 121 553 129
