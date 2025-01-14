@@ -1,5 +1,4 @@
 using LowAlt_team_edition.misc_classes;
-using LowAlt_team_edition.services;
 
 namespace LowAlt_team_edition.services;
 
@@ -7,49 +6,62 @@ public class AccountFinderService : Messages
 {
     private string _pathToFile;
 
+
     public AccountFinderService(string pathToFile)
     {
         _pathToFile = pathToFile;
     }
 
+
     /// <summary>
-    /// returns a MockPassenger if the account is found, else null
+    /// checks the given credentials against the ones found in the file
     /// </summary>
-    public MockPassanger? GetAccount(string usernameGiven, string passwordGiven)
+    public MockPassanger? GetAccountFromFile(string usernameGiven, string passwordGiven)
     {
-        using (StreamReader file = new StreamReader(_pathToFile)) {
-            file.ReadLine(); file.ReadLine(); // skip first 2 lines
+        IEnumerable<string> lines = File.ReadLines(_pathToFile).Skip(2); // skip the first 2 lines as they are for redability purposes
+        return FindAccount(lines, usernameGiven, passwordGiven);
+    }
 
-            string? line;
-            while ((line = file.ReadLine()) != null) {
-                string[] parts = line.Split(" ");
 
-                if (parts.Length < 4) {
-                    ShowError($"Invalid account entry:\n -> {line}");
-                    continue;
-                }
+    /// <summary>
+    /// verify the credentials against the account in the entries.
+    /// </summary>
+    private MockPassanger? FindAccount(IEnumerable<string> lines, string usernameGiven, string passwordGiven)
+    {
+        foreach (var entry in lines) {
+            MockPassanger account;
+            
+            if (!TryParseAccount(entry, out account))
+            {
+                ShowError($"Invalid account entry: {entry}");
+                continue;
+            }
 
-                string accountType = parts[0];
-                string username = parts[1];
-                string password = parts[2];
-                string cnp = parts[3];
-                List<string> reservations = parts.Skip(3).ToList();
-
-                if (username == usernameGiven && password != passwordGiven)  {
-                    return null;
-                }
-
-                MockPassanger account = new MockPassanger(
-                    accountType,
-                    username,
-                    password,
-                    cnp,
-                    reservations
-                );
+            if (account.Username == usernameGiven && account.Password == passwordGiven) {
                 return account;
             }
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// parses the account data. returns the success of the conversion.
+    /// </summary>
+    public bool TryParseAccount(string line, out MockPassanger account)
+    {
+        account = null!;
+
+        string[] parts = line.Split(" ");
+        if (parts.Length < 4) return false;
+
+        string accountType = parts[0];
+        string username = parts[1];
+        string password = parts[2];
+        string cnp = parts[3];
+        List<string> reservations = parts.Skip(4).ToList();
+
+        account = new MockPassanger(accountType, username, password, cnp, reservations);
+        return true;
     }
 }

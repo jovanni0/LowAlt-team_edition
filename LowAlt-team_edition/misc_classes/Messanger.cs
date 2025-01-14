@@ -75,5 +75,58 @@ public class Messages
         return parsedValue;
     }
 
+
+    /// <summary>
+    /// parse a string to greater-then-value int and catch potential exceptions.
+    /// </summary>
+    protected int? ParseGreaterThen_Int(string parsable, int value) 
+    {
+        int parsedValue;
+        try {
+            parsedValue = int.Parse(parsable);
+        }
+        catch (ArgumentNullException e) {
+            ShowError("int null exception.");
+            return null;
+        }
+        catch (FormatException e) {
+            ShowError($"int format exception for {parsable}.");
+            return null;
+        }
+
+        if (parsedValue <= value) {
+            ShowError($"value {parsedValue} is not greater then {value}");
+            return null;
+        }
+
+        return parsedValue;
+    }
+
+    /// <summary>
+    /// parse a string to greater-or-equal-then-value int and catch potential exceptions.
+    /// </summary>
+    protected int? ParseGreaterOrEqualTo_Int(string parsable, int value) 
+    {
+        int parsedValue;
+        try {
+            parsedValue = int.Parse(parsable);
+        }
+        catch (ArgumentNullException e) {
+            ShowError("int null exception.");
+            return null;
+        }
+        catch (FormatException e) {
+            ShowError($"int format exception for {parsable}.");
+            return null;
+        }
+
+        if (parsedValue < value) {
+            ShowError($"value {parsedValue} is not greater or equal then {value}");
+            return null;
+        }
+
+        return parsedValue;
+    }
+
 #endregion
 }

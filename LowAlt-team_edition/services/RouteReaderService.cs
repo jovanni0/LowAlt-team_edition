@@ -11,49 +11,54 @@ public class RouteReaderService : Messages
         _pathToFile = pathToFile;
     }
 
-    public List<Ruta> GetRoutes()
+    public List<Ruta> GetRoutesFromFile() {
+        IEnumerable<string> lines = File.ReadLines(_pathToFile).Skip(2); // skip the first 2 lines as they are for redability purposes
+        return LoadRoutes(lines);
+    }
+
+    private List<Ruta> LoadRoutes(IEnumerable<string> lines)
     {
-        List<Ruta> rute = new List<Ruta>();
+        List<Ruta> routes = new List<Ruta>();
 
-        using (StreamReader file = new StreamReader(_pathToFile)) {
-            file.ReadLine(); file.ReadLine(); // skip first 2 lines
+        foreach (var entry in lines) {
+            Ruta route;
 
-            string? line;
-            while ((line = file.ReadLine()) != null) {
-                string[] parts = line.Split(" ");
-
-                if (parts.Length < 3) {
-                    ShowError($"Invalid route entry: {line}");
-                    continue;
-                }
-                
-                int distance;
-                try
-                {
-                    distance = int.Parse(parts[1]);
-                }
-                catch (ArgumentNullException e)
-                {
-                    Console.WriteLine($"distance argument null for route: {line}");
-                    continue;
-                }
-                catch (FormatException e)
-                {
-                    Console.WriteLine($"distance argument format error for route: {line}");
-                    continue;
-                }
-
-                string[] locations = parts[0].Split("-");
-                if (locations.Length < 2) {
-                    ShowError($"Invalid start and end locations (start-end): {line}");
-                    continue;
-                }
-
-                Ruta ruta = new Ruta(locations[0], locations[1], distance, parts[2]);
-                rute.Add(ruta);
+            if (!TryParseRoute(entry, out route)) {
+                ShowError($"Invalid route entry: {entry}");
+                continue;
             }
+
+            routes.Add(route);
         }
 
-        return rute;
+        return routes;
+    }
+
+    /// <summary>
+    /// parses the route data. returns the success of the conversion.
+    /// </summary>
+    public bool TryParseRoute(string entry, out Ruta mockRoute) {
+        mockRoute = null!;
+
+        string[] parts = entry.Split(" ");
+
+        if (parts.Length < 3) {
+            ShowError($"Invalid route entry: {entry}");
+            return false;
+        }
+
+        int? parsedDistance = ParseGreaterThen_Int(parts[1], 0);
+        if (parsedDistance is null) {
+            ShowError($"Invalid route entry: {entry}");
+            return false;
+        }
+
+        string[] locations = parts[0].Split("-");
+        if (locations.Length < 2) {
+            ShowError($"Invalid start and end locations (start-end): {entry}");
+            return false;
+        }
+
+        return true;
     }
 }
