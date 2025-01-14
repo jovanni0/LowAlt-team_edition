@@ -30,7 +30,7 @@ public abstract class Flight
     /// <summary>
     /// the number of empty seats
     /// </summary>
-    public int AvailableSeats { get; init; }
+    public int AvailableSeats { get; set; }
 
     public List<Reservation> Reservations { get; init; }
 
