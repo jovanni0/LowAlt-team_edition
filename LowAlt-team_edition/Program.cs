@@ -23,7 +23,7 @@ class Program
         RezervariPasageri testfuctieafisare = new RezervariPasageri(pasagerTest, ZboruriTest);
         testfuctieafisare.InteractiunePasageri();
         RapoarteSiStatistici rapoartetestare = new RapoarteSiStatistici(ZboruriTest, pasageriTest);
-        rapoartetestare.RaportZilnic();
+        rapoartetestare.InteractiuneAdministrator();
 
 
 
