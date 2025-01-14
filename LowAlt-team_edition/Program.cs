@@ -14,11 +14,18 @@ class Program
             
         };
         Passenger pasagerTest = new Passenger("065373234583", "user3", new List<Reservation>(), false);
-
+        List<Passenger> pasageriTest = new List<Passenger>
+        {
+            pasagerTest,
+            new Passenger("7682920262","user2", new List<Reservation>(), true)
+        };
+        
         RezervariPasageri testfuctieafisare = new RezervariPasageri(pasagerTest, ZboruriTest);
         testfuctieafisare.InteractiunePasageri();
-        
-        
-       
+        RapoarteSiStatistici rapoartetestare = new RapoarteSiStatistici(ZboruriTest, pasageriTest);
+        rapoartetestare.RaportZilnic();
+
+
+
     }
 }

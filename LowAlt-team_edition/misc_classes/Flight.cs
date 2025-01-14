@@ -57,6 +57,14 @@ public abstract class Flight
     public double GetRevenue() => GetSeatPrice() * (Seats - AvailableSeats);
 
     /// <summary>
+    /// Calculeaza numarul de locuri rezervate intr-un zbor
+    /// </summary>
+    public int LocuriRezervate()
+    {
+        return Seats - AvailableSeats;
+    }
+
+    /// <summary>
     /// calculates the proce of a ticket
     /// </summary>
     public abstract double GetSeatPrice();
