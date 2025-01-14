@@ -34,6 +34,13 @@ public class Passenger
         PriorReservations = priorReservations;
         IsAdmin = isAdmin;
     }
-    
+
+    /// <summary>
+    /// Adaugare rezervare 
+    /// </summary>
+    public void AddReservation(Reservation reservation)
+    {
+        PriorReservations.Add(reservation);
+    }
     public override string ToString() => $"Cnp: {Cnp}, Username: {Username}";
 }
