@@ -17,7 +17,10 @@ class Program
 
         RezervariPasageri testfuctieafisare = new RezervariPasageri(pasagerTest, ZboruriTest);
         testfuctieafisare.RezervareLocuri();
-      
+        testfuctieafisare.StergereRezervare();
+        testfuctieafisare.StergereRezervare();
+        
+        
        
     }
 }

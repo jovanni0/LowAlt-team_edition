@@ -20,6 +20,9 @@ public class RezervariPasageri
     public void ZboruriDisponibile()
     {
         int i = -1;
+        
+        Console.Clear();
+        Console.WriteLine("Zborurile disponibile sunt: ");
         foreach (Flight zbor in _listaZboruri)
         {
             i++;
@@ -53,6 +56,7 @@ public class RezervariPasageri
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                Console.ReadLine();
                 continue;
             }
 
@@ -73,6 +77,7 @@ public class RezervariPasageri
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                Console.ReadLine();
                 continue;
             }
 
@@ -97,6 +102,80 @@ public class RezervariPasageri
 
         }
 
+
+    }
+
+/// <summary>
+/// Afisarea rezervarilor anterioare ale utilizatorului
+/// </summary>
+    public void AfisareRezervari()
+    {
+        int i = -1;
+        
+        Console.Clear();
+        if (_pasager.PriorReservations.Count == 0)
+        {
+            Console.WriteLine("Lista dumneavoastra de rezervari este goala!");
+        }
+        else
+        {
+            Console.WriteLine("Lista dumneavoastra de rezervari este: ");
+            foreach (Reservation rezervare in _pasager.PriorReservations)
+            {
+                i++;
+                Console.Write($"({i}) ");
+                Console.WriteLine(rezervare.ToString());
+            }
+        }
+       
+    }
+
+/// <summary>
+/// Stergerea unei rezervari facute anterior
+/// </summary>
+    public void StergereRezervare()
+    {
+        while (true)
+        {
+            int numarRezervareInt = -1;
+            
+            Console.Clear();
+            Console.WriteLine("Lista dumneavoastra de rezervari este: ");
+            AfisareRezervari();
+
+            if (_pasager.PriorReservations.Count == 0)
+            {
+                break;
+            }
+
+            Console.WriteLine("Introduceti rezervarea la care doriti sa renuntati: ");
+            string numarRezervare = Console.ReadLine() ?? " ";
+            try
+            {
+                numarRezervareInt = Int32.Parse(numarRezervare);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadLine();
+                continue;
+            }
+
+            if (numarRezervareInt < 0 || numarRezervareInt >= _pasager.PriorReservations.Count)
+            {
+                Console.WriteLine("Ne pare rau, dar rezervarea aleasa nu exista in lista!");
+                Console.WriteLine("Incercati sa alegeti o alta rezervare.");
+                Console.ReadLine();
+                continue;
+            }
+
+            _pasager.PriorReservations[numarRezervareInt].TargetFlight.AvailableSeats +=
+                _pasager.PriorReservations[numarRezervareInt].Seats;
+            _pasager.PriorReservations.RemoveAt(numarRezervareInt);
+            Console.WriteLine("Rezervarea a fost eliminata cu succes!");
+            break;
+
+        }
 
     }
 }
