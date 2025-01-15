@@ -21,7 +21,7 @@ public class UserInterface
                 Console.Clear();
                 Console.WriteLine("[GUEST PANEL]");
                 Console.WriteLine("You are not logged in. Your options will be limited.");
-                Console.WriteLine("(0): Exit program\n(1): Continue as guest\n(2): Registrer");
+                Console.WriteLine("(0): Exit program\n(1): Continue as guest\n(2): Register");
                 Console.Write("Select your option: ");
                 string option = Console.ReadLine() ?? "1";
 
