@@ -4,13 +4,11 @@ namespace LowAlt_team_edition;
 
 public class RapoarteSiStatistici
 {
-    private List<Flight> _zboruri;
-    private List<Passenger> _pasageri;
+    private readonly DataContext _dataContext;
 
-    public RapoarteSiStatistici(List<Flight> zboruri, List<Passenger> pasageri)
+    public RapoarteSiStatistici(DataContext dataContext)
     {
-        this._zboruri = zboruri;
-        this._pasageri = pasageri;
+       this._dataContext = dataContext;
     }
 
     /// <summary>
@@ -57,9 +55,9 @@ public class RapoarteSiStatistici
     private void ZboruriRezervate()
     {
         Console.Clear();
-        _zboruri.Sort((x,y)=>y.LocuriRezervate().CompareTo(x.LocuriRezervate()));
+        _dataContext.Flights.Sort((x,y)=>y.LocuriRezervate().CompareTo(x.LocuriRezervate()));
         Console.WriteLine("Zborurile in ordinea rezervarilor sunt:\n");
-        foreach (Flight zbor in _zboruri)
+        foreach (Flight zbor in _dataContext.Flights)
         {
             Console.WriteLine(zbor.ToString());
             Console.WriteLine($"Locuri rezervate: {zbor.LocuriRezervate()}");
@@ -76,7 +74,7 @@ public class RapoarteSiStatistici
         Console.Clear();
         int i = -1;
         Console.WriteLine("Zborurile sunt: ");
-        foreach (Flight zbor in _zboruri)
+        foreach (Flight zbor in _dataContext.Flights)
         {
             i++; 
             Console.Write($"({i}) ");
@@ -108,14 +106,14 @@ public class RapoarteSiStatistici
                 continue;
             }
             
-            if(numarZborInt < 0|| numarZborInt >= _zboruri.Count)
+            if(numarZborInt < 0|| numarZborInt >= _dataContext.Flights.Count)
             {
                 Console.WriteLine("Zborul selectat nu exista!\nIncercati sa introduceti un alt zbor.");
                 Console.ReadLine();
                 continue;
             }
             
-            Console.WriteLine($"Venitul generat de zborul selectat este de {_zboruri[numarZborInt].GetRevenue()} RON");
+            Console.WriteLine($"Venitul generat de zborul selectat este de {_dataContext.Flights[numarZborInt].GetRevenue()} RON");
             break;
         }
     }
@@ -127,7 +125,7 @@ public class RapoarteSiStatistici
     {
         Console.Clear();
         double venituriTotale = 0;
-        foreach (Flight zbor in _zboruri)
+        foreach (Flight zbor in _dataContext.Flights)
         {
             venituriTotale += zbor.GetRevenue();
         }
@@ -139,7 +137,7 @@ public class RapoarteSiStatistici
         Console.Clear();
         int i = -1;
         Console.WriteLine("Lista de pasageri este: ");
-        foreach (Passenger pasager in _pasageri)
+        foreach (Passenger pasager in _dataContext.Passengers)
         {
             i++;
             Console.Write($"({i}) ");
@@ -172,7 +170,7 @@ public class RapoarteSiStatistici
                 continue;
             }
 
-            if (numarPasagerInt < 0 || numarPasagerInt >= _pasageri.Count)
+            if (numarPasagerInt < 0 || numarPasagerInt >= _dataContext.Passengers.Count)
             {
                 Console.WriteLine("Pasagerul selectat nu exista in lista!\nIncercati sa selectati un alt pasager.");
                 Console.ReadLine();
@@ -181,7 +179,7 @@ public class RapoarteSiStatistici
 
             Console.WriteLine("Platile efectuate de pasagerul selectat sunt:\n ");
             int plata = 0;
-            foreach (Reservation rezervare in _pasageri[numarPasagerInt].PriorReservations)
+            foreach (Reservation rezervare in _dataContext.Passengers[numarPasagerInt].PriorReservations)
             {
                 plata++;
                 Console.WriteLine($"Plata numarul {plata}: {rezervare.TargetFlight} - {rezervare.Price} RON");

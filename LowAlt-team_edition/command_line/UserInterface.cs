@@ -67,7 +67,8 @@ public class UserInterface
                         passengerManagement.InteractiunePasageri();
                         break;
                     case "3":
-                        Console.WriteLine("Not implemented yet.");
+                        var rapoarte = new RapoarteSiStatistici(_dataContext);
+                        rapoarte.InteractiuneAdministrator();
                         break;
                     default:
                         Console.WriteLine("Optiune invalida!");
