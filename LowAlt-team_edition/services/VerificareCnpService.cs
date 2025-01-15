@@ -10,15 +10,8 @@ public static class VerificareCnpService
             return false;
         }
 
-        foreach (char caracter  in cnp)
-        {
-            if (!cnpList.Contains(caracter))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        //Expresie LINQ care verifica daca toate caracterele din cnp sunt incluse in lista cu cifre
+        return cnp.All(caracter => cnpList.Contains(caracter));
     }
     
     

@@ -189,7 +189,6 @@ public class RezervariPasageri
             int numarRezervareInt = -1;
             
             Console.Clear();
-            Console.WriteLine("Lista dumneavoastra de rezervari este: ");
             AfisareRezervari();
 
             if (_dataContext.User.PriorReservations.Count == 0)
