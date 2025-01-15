@@ -68,13 +68,19 @@ public class FlightManagement
     private void AdaugareZbor()
     {
         Console.Write("\nIntroduceti ID zbor: ");
-        string idZbor = Console.ReadLine();
+        string? idZbor = Console.ReadLine();
         
         Console.Write("Introduceti tipul zborului (1 - Local, 2 - International): ");
-        string tipZbor = Console.ReadLine();
+        string? tipZbor = Console.ReadLine();
         
         Console.Write("Introduceti ID ruta: ");
-        string idRuta = Console.ReadLine();
+        string? idRuta = Console.ReadLine();
+
+        if (idZbor == null || idRuta == null || tipZbor == null)
+        {
+            Console.WriteLine("Datele introduse sunt invalide!");
+            return;
+        }
         
         Console.Write("Introduceti ora plecarii: ");
         

@@ -55,9 +55,14 @@ public class RapoarteSiStatistici
     private void ZboruriRezervate()
     {
         Console.Clear();
-        _dataContext.Flights.Sort((x,y)=>y.LocuriRezervate().CompareTo(x.LocuriRezervate()));
+        //Expresie LINQ pentru sortarea descrescatoare a zborurilor in 
+        //functie de numarul de locuri rezervate
+        
+        var sortedFlights = _dataContext.Flights
+            .OrderByDescending(f => f.LocuriRezervate())
+            .ToList();
         Console.WriteLine("Zborurile in ordinea rezervarilor sunt:\n");
-        foreach (Flight zbor in _dataContext.Flights)
+        foreach (Flight zbor in sortedFlights)
         {
             Console.WriteLine(zbor.ToString());
             Console.WriteLine($"Locuri rezervate: {zbor.LocuriRezervate()}");
@@ -124,11 +129,9 @@ public class RapoarteSiStatistici
     private void RaportZilnic()
     {
         Console.Clear();
-        double venituriTotale = 0;
-        foreach (Flight zbor in _dataContext.Flights)
-        {
-            venituriTotale += zbor.GetRevenue();
-        }
+        //Metoda LINQ pt calcularea veniturilor totale (aduna veniturile din fiecare zbor 
+        //si salveaza totalul in variabila venituriTotale)
+        double venituriTotale = _dataContext.Flights.Sum(zbor => zbor.GetRevenue());
         Console.WriteLine($"Venituri totale sunt de: {venituriTotale} RON");
     }
 

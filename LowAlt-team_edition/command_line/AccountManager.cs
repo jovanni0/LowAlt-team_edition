@@ -128,8 +128,9 @@ public class AccountManager : Messages
             }
 
             Console.Write("CNP: ");
-            string? cnp = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(cnp)) {
+            string? cnp = Console.ReadLine()??" ";
+            if ((string.IsNullOrWhiteSpace(cnp))|| (!VerificareCnpService.verificare(cnp))) {
+                
                 ShowErrorAndWaitConfirmation("Invalid CNP.");
                 continue;
             }
