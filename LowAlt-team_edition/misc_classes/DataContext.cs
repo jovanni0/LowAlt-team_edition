@@ -5,6 +5,8 @@ public class DataContext
     public List<Flight> Flights = new List<Flight>();
 
     public List<Ruta> Routes = new List<Ruta>();
+    
+    public List<Passenger> Passengers = new List<Passenger>();
 
     public Passenger User = new Passenger(
         string.Empty,
