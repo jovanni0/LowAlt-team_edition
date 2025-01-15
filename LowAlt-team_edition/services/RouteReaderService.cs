@@ -1,14 +1,17 @@
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
 public class RouteReaderService : Messages
 {
     private string _pathToFile;
+    private ILogger _logger;
 
-    public RouteReaderService(string pathToFile)
+    public RouteReaderService(string pathToFile, ILogger logger)
     {
         _pathToFile = pathToFile;
+        _logger = logger;
     }
 
     public List<Ruta> GetRoutesFromFile() {
@@ -24,7 +27,7 @@ public class RouteReaderService : Messages
             Ruta route;
 
             if (!TryParseRoute(entry, out route)) {
-                ShowError($"Invalid route entry: {entry}");
+                _logger.LogWarning($"Invalid route entry: {entry}");
                 continue;
             }
 
@@ -43,19 +46,19 @@ public class RouteReaderService : Messages
         string[] parts = entry.Split(" ");
 
         if (parts.Length < 3) {
-            ShowError($"Invalid route entry: {entry}");
+            _logger.LogWarning($"Invalid route entry: {entry}");
             return false;
         }
 
         int? parsedDistance = ParseGreaterThen_Int(parts[1], 0);
         if (parsedDistance is null) {
-            ShowError($"Invalid route entry: {entry}");
+            _logger.LogWarning($"Invalid route entry: {entry}");
             return false;
         }
 
         string[] locations = parts[0].Split("-");
         if (locations.Length < 2) {
-            ShowError($"Invalid start and end locations (start-end): {entry}");
+            _logger.LogWarning($"Invalid start and end locations (start-end): {entry}");
             return false;
         }
 

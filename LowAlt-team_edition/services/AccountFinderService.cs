@@ -1,15 +1,18 @@
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
-public class AccountFinderService : Messages
+public class AccountFinderService
 {
     private string _pathToFile;
+    private ILogger _logger;
 
 
-    public AccountFinderService(string pathToFile)
+    public AccountFinderService(string pathToFile, ILogger logger)
     {
         _pathToFile = pathToFile;
+        _logger = logger;
     }
 
 
@@ -33,7 +36,7 @@ public class AccountFinderService : Messages
             
             if (!TryParseAccount(entry, out account))
             {
-                ShowError($"Invalid account entry: {entry}");
+                _logger.LogWarning($"Invalid account entry: {entry}");
                 continue;
             }
 

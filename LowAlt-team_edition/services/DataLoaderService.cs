@@ -1,19 +1,22 @@
-using System;
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
-public class DataLoaderService : Messages
+public class DataLoaderService
 {
-    FlightReaderService _flightReaderService;
-    RouteReaderService _routeReaderService;
+    private FlightReaderService _flightReaderService;
+    private RouteReaderService _routeReaderService;
+    private ILogger _logger;
+    
 
-
-    public DataLoaderService(string filghtsFilePath, string routesFilePath)
+    public DataLoaderService(string filghtsFilePath, string routesFilePath, ILogger logger)
     {
-        _flightReaderService = new FlightReaderService(filghtsFilePath);
-        _routeReaderService = new RouteReaderService(routesFilePath);
+        _flightReaderService = new FlightReaderService(filghtsFilePath, logger);
+        _routeReaderService = new RouteReaderService(routesFilePath, logger);
+        _logger = logger;
     }
+
 
     public (List<Ruta>, List<Flight>) GetData()
     {
@@ -27,7 +30,7 @@ public class DataLoaderService : Messages
             Ruta? actualRoute = routes.Find(item => item.IDRuta == routeId);
 
             if (actualRoute == null) {
-                ShowError($"Unable to find route with id {routeId}");
+                _logger.LogWarning($"Unable to find route with id {routeId}");
                 continue;
             }
 
@@ -36,7 +39,7 @@ public class DataLoaderService : Messages
                 case "local": actualFlight = new LocalFlight(mockFlight, actualRoute); break;
                 case "inter": actualFlight = new InternationalFlight(mockFlight, actualRoute); break;
                 default:
-                    Console.WriteLine($"Invalid flight type: {mockFlight.flightType}");
+                    _logger.LogWarning($"Invalid flight type: {mockFlight.flightType}");
                     continue;
             }
 

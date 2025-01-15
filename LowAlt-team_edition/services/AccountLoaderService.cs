@@ -1,16 +1,17 @@
-using System;
-using System.Data.SqlTypes;
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
 public class AccountLoaderService : Messages
 {
     private AccountFinderService _accountFinderService;
+    private ILogger _logger;
 
-    public AccountLoaderService(string accountsFile)
+    public AccountLoaderService(string accountsFile, ILogger logger)
     {
-        _accountFinderService = new AccountFinderService(accountsFile);
+        _accountFinderService = new AccountFinderService(accountsFile, logger);
+        _logger = logger;
     }
 
     public Passenger? GetAccount(string username, string password, List<Flight> flights)
@@ -37,7 +38,7 @@ public class AccountLoaderService : Messages
         foreach(var item in mockReservarions) {
             Reservation? reservation = ComposeReservation(item, passenger, flights);
             if (reservation == null) {
-                Console.WriteLine($"Invalid reservation: {item}");
+                _logger.LogWarning($"Invalid reservation: {item}");
                 continue;
             }
 
@@ -51,19 +52,19 @@ public class AccountLoaderService : Messages
     private Reservation? ComposeReservation(string entry, Passenger passenger, List<Flight> flights) {
         string[] parts = entry.Split("-");
         if (parts.Length < 2) {
-            Console.WriteLine($"Invalid reservation entry: {entry}");
+            _logger.LogWarning($"Invalid reservation entry: {entry}");
             return null;
         }
 
         int? seats = ParseGreaterThen_Int(parts[1], 0);
         if (seats == null) {
-            Console.WriteLine($"Invalid number of reserved seats: ${parts[1]}");
+            _logger.LogWarning($"Invalid number of reserved seats: ${parts[1]}");
             return null;
         }
 
         Flight? flight = flights.Find(item => item.FlightId == parts[0]);
         if (flight == null) {
-            Console.WriteLine($"Could not find a flight with id {parts[0]}");
+            _logger.LogWarning($"Could not find a flight with id {parts[0]}");
             return null;
         }
 

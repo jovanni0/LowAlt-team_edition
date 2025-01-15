@@ -1,16 +1,18 @@
-using System.Runtime.CompilerServices;
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
-public class AccountWriterService : Messages
+public class AccountWriterService
 {
     private string _pathToFile;
+    private ILogger _logger;
 
 
-    public AccountWriterService(string accountsFile)
+    public AccountWriterService(string accountsFile, ILogger logger)
     {
         _pathToFile = accountsFile;
+        _logger = logger;
     }
 
 
@@ -21,7 +23,7 @@ public class AccountWriterService : Messages
                 File.Create(_pathToFile).Dispose();
             }
             catch (Exception e) {
-                Console.WriteLine($"Could not create file {_pathToFile}: {e}");
+                _logger.LogWarning($"Could not create file {_pathToFile}: {e}");
                 return;
             }
         }
@@ -29,7 +31,7 @@ public class AccountWriterService : Messages
             File.WriteAllText(_pathToFile, database);
         }
         catch (Exception e) {
-            Console.WriteLine($"Could not write to file {_pathToFile}: {e}");
+            _logger.LogWarning($"Could not write to file {_pathToFile}: {e}");
         }
     }
     

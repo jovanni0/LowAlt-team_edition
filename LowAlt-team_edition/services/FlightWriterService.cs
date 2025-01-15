@@ -1,17 +1,18 @@
-using System;
-using System.Diagnostics.Contracts;
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
 public class FlightWriterService
 {
     private string _filePath;
+    private ILogger _logger;
 
 
-    public FlightWriterService(string flightsFile)
+    public FlightWriterService(string flightsFile, ILogger logger)
     {
         _filePath = flightsFile;
+        _logger = logger;
     }
 
 
@@ -23,7 +24,7 @@ public class FlightWriterService
                 File.Create(_filePath).Dispose();
             }
             catch (Exception e) {
-                Console.WriteLine($"Could not create file {_filePath}: {e}");
+                _logger.LogWarning($"Could not create file {_filePath}: {e}");
                 return;
             }
         }
@@ -31,7 +32,7 @@ public class FlightWriterService
             File.WriteAllText(_filePath, database);
         }
         catch (Exception e) {
-            Console.WriteLine($"Could not write to file {_filePath}: {e}");
+            _logger.LogWarning($"Could not write to file {_filePath}: {e}");
             return;
         }
     }

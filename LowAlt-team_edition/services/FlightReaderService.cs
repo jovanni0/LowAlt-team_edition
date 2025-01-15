@@ -1,15 +1,19 @@
 using LowAlt_team_edition.misc_classes;
+using Microsoft.Extensions.Logging;
 
 namespace LowAlt_team_edition.services;
 
 public class FlightReaderService : Messages
 {
     private string _pathToFile;
+    private ILogger _logger;
 
-    public FlightReaderService(string pathToFile)
+    public FlightReaderService(string pathToFile, ILogger logger)
     {
         _pathToFile = pathToFile;
+        _logger = logger;
     }
+
 
     public List<MockFlight> GetFlightsFromFile()
     {
@@ -26,7 +30,7 @@ public class FlightReaderService : Messages
             MockFlight flight;
 
             if (!TryParseFlight(entry, out flight)) {
-                ShowError($"Invalid flight entry: {entry}");
+                _logger.LogWarning($"Invalid flight entry: {entry}");
                 continue;
             }
 
@@ -46,7 +50,7 @@ public class FlightReaderService : Messages
         string[] parts = entry.Split(" ");
 
         if (parts.Length < 7) {
-            ShowError($"Invalid flight entry:\n -> {entry}");
+            _logger.LogWarning($"Invalid flight entry:\n -> {entry}");
             return false;
         }
 
@@ -60,11 +64,11 @@ public class FlightReaderService : Messages
 
         if (departureTime == null || flightTime == null || 
         seats == null || availableSeats == null) {
-            ShowError($"Invalid flight entry:\n -> {entry}");
+            _logger.LogWarning($"Invalid flight entry:\n -> {entry}");
             return false;
         }
         if (flightType != "local" && flightType != "inter") {
-            ShowError($"Invalid flight type {flightType} from:\n -> {entry}");
+            _logger.LogWarning($"Invalid flight type {flightType} from:\n -> {entry}");
             return false;
         }
 

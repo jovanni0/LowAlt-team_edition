@@ -1,13 +1,17 @@
+using Microsoft.Extensions.Logging;
+
 namespace LowAlt_team_edition.services;
 
 public class RouteWriterService
 {
     private string _filePath;
+    private ILogger _logger;
 
 
-    public RouteWriterService(string filePath)
+    public RouteWriterService(string filePath, ILogger logger)
     {
         _filePath = filePath;
+        _logger = logger;
     }
 
 
@@ -19,7 +23,7 @@ public class RouteWriterService
                 File.Create(_filePath).Dispose();
             }
             catch (Exception e) {
-                Console.WriteLine($"Could not create file {_filePath}: {e}");
+                _logger.LogWarning($"Could not create file {_filePath}: {e}");
                 return;
             }
         }
@@ -27,7 +31,7 @@ public class RouteWriterService
             File.WriteAllText(_filePath, database);
         }
         catch (Exception e) {
-            Console.WriteLine($"Could not write to file {_filePath}: {e}");
+            _logger.LogWarning($"Could not write to file {_filePath}: {e}");
         }
     }
 

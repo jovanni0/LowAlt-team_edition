@@ -1,7 +1,11 @@
+using Microsoft.Extensions.Logging;
+
 namespace LowAlt_team_edition.misc_classes;
 
 public class DataContext
 {
+    public ILogger? Logger { get; set; }
+    
     public List<Flight> Flights = new List<Flight>();
 
     public List<Ruta> Routes = new List<Ruta>();

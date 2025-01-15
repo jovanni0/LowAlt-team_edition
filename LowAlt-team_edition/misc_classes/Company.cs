@@ -32,22 +32,8 @@ public class Company
 
     public void Begin()
     {
-        /// read the data from the files
-        var dataLoader = new DataLoaderService(Context.FlightsFile, Context.RoutesFile);
-        (var routes, var flights) = dataLoader.GetData();
-        Context.Routes = routes;
-        Context.Flights = flights;
-
         /// run the console application
         var interfata = new UserInterface(Context);
         interfata.StartInteraction();
-
-        /// save the data in the files
-        AccountWriterService accountsWriter = new AccountWriterService(Context.AccountsFile);
-        accountsWriter.WriteAccountsToFile(Context.Passengers);
-        FlightWriterService flightsWriter = new FlightWriterService(Context.FlightsFile);
-        flightsWriter.WriteFlightsToFile(Context.Flights);
-        RouteWriterService routeWriter = new RouteWriterService(Context.RoutesFile);
-        routeWriter.WriteRoutesToFile(Context.Routes);
     }
 }
