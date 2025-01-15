@@ -8,6 +8,11 @@ public class LocalFlight : Flight
         
     }
 
+    public LocalFlight(MockFlight mockFlight, Ruta route) : base(mockFlight, route)
+    {
+        
+    }
+
     public override double GetSeatPrice()
     {
         return 50 + (0.5 * Route.Km);

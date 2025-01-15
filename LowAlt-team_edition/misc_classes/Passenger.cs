@@ -42,5 +42,13 @@ public class Passenger
     {
         PriorReservations.Add(reservation);
     }
-    public override string ToString() => $"Cnp: {Cnp}, Username: {Username}";
+    public override string ToString()
+    {
+        string toReturn = $"Pasager {Username}, Cnp: {Cnp}:";
+        foreach (var reservation in PriorReservations) {
+            toReturn += $"\n -+ {reservation.TargetFlight.Route.OrasPlecare} -> {reservation.TargetFlight.Route.OrasDestinatie} ({reservation.TargetFlight.Route.Km} km)" +
+                        $", Ora plecare: {reservation.TargetFlight.DepartureTime}";
+        }
+        return toReturn;
+    }
 }

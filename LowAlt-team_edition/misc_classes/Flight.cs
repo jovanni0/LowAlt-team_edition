@@ -46,6 +46,18 @@ public abstract class Flight
         Reservations = new List<Reservation>();
     }
 
+    public Flight(MockFlight mockFlight, Ruta route) {
+        FlightId = mockFlight.flightId;
+        DepartureTime = mockFlight.departureTime;
+        FlightTime = mockFlight.flightTime;
+        Seats = mockFlight.seats;
+        AvailableSeats = mockFlight.availableSeats;
+
+        Route = route;
+
+        Reservations = new List<Reservation>();
+    }
+
     /// <summary>
     /// adds a reservation to the flight
     /// </summary>

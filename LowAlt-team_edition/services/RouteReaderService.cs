@@ -59,6 +59,13 @@ public class RouteReaderService : Messages
             return false;
         }
 
+        mockRoute = new Ruta(
+            locations[0], 
+            locations[1], 
+            (int)parsedDistance, 
+            parts[2]
+        );
+
         return true;
     }
 }

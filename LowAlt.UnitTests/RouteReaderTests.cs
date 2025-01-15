@@ -12,6 +12,7 @@ public class RouteReaderTests
     {
         RouteReaderService routeReaderService = new RouteReaderService("somepath");
         Ruta route;
+        Ruta expectedRoute = new Ruta("Timisoara", "Arad", 87, "01");
 
         var success = routeReaderService.TryParseRoute(
             "Timisoara-Arad 87 01", 
@@ -19,6 +20,7 @@ public class RouteReaderTests
         );
 
         Assert.IsTrue(success);
+        Assert.IsTrue(expectedRoute.Equals(route));
     }
 
     [TestMethod]
@@ -33,6 +35,7 @@ public class RouteReaderTests
         );
 
         Assert.IsFalse(success);
+        Assert.IsTrue(route == null);
     }
 
     [TestMethod]
@@ -47,6 +50,7 @@ public class RouteReaderTests
         );
 
         Assert.IsFalse(success);
+        Assert.IsTrue(route == null);
     }
 
     [TestMethod]
@@ -61,6 +65,7 @@ public class RouteReaderTests
         );
 
         Assert.IsFalse(success);
+        Assert.IsTrue(route == null);
     }
 
     [TestMethod]
@@ -75,6 +80,7 @@ public class RouteReaderTests
         );
 
         Assert.IsFalse(success);
+        Assert.IsTrue(route == null);
     }
 
     [TestMethod]
@@ -82,6 +88,7 @@ public class RouteReaderTests
     {
         RouteReaderService routeReaderService = new RouteReaderService("somepath");
         Ruta route;
+        Ruta expectedRoute = new Ruta("Timisoara", "Arad", 100, "01");
 
         var success = routeReaderService.TryParseRoute(
             "Timisoara-Arad 100 01 skjbc 838y ia8dc", 
@@ -89,5 +96,6 @@ public class RouteReaderTests
         );
 
         Assert.IsTrue(success);
+        Assert.IsTrue(route.Equals(expectedRoute));
     }
 }

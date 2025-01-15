@@ -8,6 +8,11 @@ public class InternationalFlight : Flight
         
     }
 
+    public InternationalFlight(MockFlight mockFlight, Ruta route) : base(mockFlight, route)
+    {
+        
+    }
+
     public override double GetSeatPrice()
     {
         return 200 + Route.Km;
