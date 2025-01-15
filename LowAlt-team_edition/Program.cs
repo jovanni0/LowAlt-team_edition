@@ -9,18 +9,27 @@ class Program
     static void Main(string[] args)
     {
         DataContext dataContext = new DataContext{
-            dataFolder = "data"
+            AccountsFile = "data/accounts.txt",
+            FlightsFile = "data/flights.txt",
+            RoutesFile = "data/routes.txt"
         };
 
-        var dataLoader = new DataLoaderService(dataContext.dataFolder);
+        /// read the data from the files
+        var dataLoader = new DataLoaderService(dataContext.FlightsFile, dataContext.RoutesFile);
         (var routes, var flights) = dataLoader.GetData();
         dataContext.Routes = routes;
         dataContext.Flights = flights;
 
+        /// run the console application
         var interfata = new UserInterface(dataContext);
         interfata.StartInteraction();
 
-        AccountWriterService accountWriter = new AccountWriterService(dataContext.dataFolder + "accounts2.txt");
-        accountWriter.WriteAccountsToFile(dataContext.Passengers);
+        /// save the data in the files
+        AccountWriterService accountsWriter = new AccountWriterService(dataContext.AccountsFile);
+        accountsWriter.WriteAccountsToFile(dataContext.Passengers);
+        FlightWriterService flightsWriter = new FlightWriterService(dataContext.FlightsFile);
+        flightsWriter.WriteFlightsToFile(dataContext.Flights);
+        RouteWriterService routeWriter = new RouteWriterService(dataContext.RoutesFile);
+        routeWriter.WriteRoutesToFile(dataContext.Routes);
     }
 }

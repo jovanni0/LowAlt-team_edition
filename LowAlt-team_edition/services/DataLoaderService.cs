@@ -9,10 +9,10 @@ public class DataLoaderService : Messages
     RouteReaderService _routeReaderService;
 
 
-    public DataLoaderService(string dataFolder)
+    public DataLoaderService(string filghtsFilePath, string routesFilePath)
     {
-        _flightReaderService = new FlightReaderService($"{dataFolder}/flights.txt");
-        _routeReaderService = new RouteReaderService($"{dataFolder}/routes.txt");
+        _flightReaderService = new FlightReaderService(filghtsFilePath);
+        _routeReaderService = new RouteReaderService(routesFilePath);
     }
 
     public (List<Ruta>, List<Flight>) GetData()

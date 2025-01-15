@@ -10,7 +10,11 @@ public class DataContext
 
     public Passenger User = new Passenger();
 
-    public string dataFolder = string.Empty;
+    public string AccountsFile = string.Empty;
+
+    public string FlightsFile = string.Empty;
+
+    public string RoutesFile = string.Empty;
 
     public override string ToString()
     {

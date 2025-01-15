@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using LowAlt_team_edition.misc_classes;
 
 namespace LowAlt_team_edition.services;
@@ -7,33 +8,43 @@ public class AccountWriterService : Messages
     private string _pathToFile;
 
 
-    public AccountWriterService(string pathToFile)
+    public AccountWriterService(string accountsFile)
     {
-        _pathToFile = pathToFile;
+        _pathToFile = accountsFile;
     }
 
 
     public void WriteAccountsToFile(List<Passenger> passengers) {
-        foreach (var passenger in passengers) {
-            MockPassanger mockPassanger = PassengerToMock(passenger);
-            WriteMockToFile(mockPassanger);
+        string database = GenerateDatabase(passengers);
+        if (!File.Exists(_pathToFile)) {
+            try {
+                File.Create(_pathToFile).Dispose();
+            }
+            catch (Exception e) {
+                Console.WriteLine($"Could not create file {_pathToFile}: {e}");
+                return;
+            }
+        }
+        try {
+            File.WriteAllText(_pathToFile, database);
+        }
+        catch (Exception e) {
+            Console.WriteLine($"Could not write to file {_pathToFile}: {e}");
         }
     }
+    
 
-
-    private void WriteMockToFile(MockPassanger passenger) 
+    private string GenerateDatabase(List<Passenger> passengers)
     {
-        string entry = StringifyPassenger(passenger);
-
-        if (!File.Exists(_pathToFile)) {
-            File.WriteAllText(
-                _pathToFile, 
-                "ACCOUNT_TYPE USERNAME PASSWORD CNP FLIGHT_ID-SEATS(0+)\n" +
-                "------------------------------------------------------"
-            );
+        string header = "ACCOUNT_TYPE USERNAME PASSWORD CNP FLIGHT_ID-SEATS(0+)\n" +
+                        "------------------------------------------------------";
+        foreach (var passanger in passengers) {
+            MockPassanger mockPassanger = PassengerToMock(passanger);
+            string entry = StringifyPassenger(mockPassanger);
+            header += $"\n{entry}";
         }
 
-        File.AppendAllText(_pathToFile, "\n" + entry);
+        return header;
     }
 
 

@@ -70,7 +70,7 @@ public class AccountManager : Messages
                 return;
             }
 
-            AccountLoaderService accountLoader = new AccountLoaderService(_dataContext.dataFolder);
+            AccountLoaderService accountLoader = new AccountLoaderService(_dataContext.AccountsFile);
             Passenger? user = accountLoader.GetAccount(username, password, _dataContext.Flights);
         
             if (user != null) {

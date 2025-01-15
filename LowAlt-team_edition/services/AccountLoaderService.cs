@@ -8,9 +8,9 @@ public class AccountLoaderService : Messages
 {
     private AccountFinderService _accountFinderService;
 
-    public AccountLoaderService(string dataFolder)
+    public AccountLoaderService(string accountsFile)
     {
-        _accountFinderService = new AccountFinderService($"{dataFolder}/accounts.txt");
+        _accountFinderService = new AccountFinderService(accountsFile);
     }
 
     public Passenger? GetAccount(string username, string password, List<Flight> flights)
