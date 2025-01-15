@@ -31,7 +31,7 @@ public class FlightManagement
             Console.WriteLine("7. Stergere ruta");
             
             Console.Write("Introduceti optiunea: ");
-            string optiune = Console.ReadLine();
+            string optiune = Console.ReadLine() ?? " ";
 
             switch (optiune)
             {
