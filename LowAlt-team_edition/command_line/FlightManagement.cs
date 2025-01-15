@@ -2,18 +2,16 @@ namespace LowAlt_team_edition.misc_classes;
 
 public class FlightManagement
 {
-    private List<Flight> lista_zboruri;
-    private List<Ruta> lista_rute;
+    private readonly DataContext _dataContext;
 
-    public FlightManagement(List<Flight> zboruri, List<Ruta> rute)
+    public FlightManagement(DataContext dataContext)
     {
-        lista_zboruri = zboruri;
-        lista_rute = rute;
+        _dataContext = dataContext;
     }
 
     public void AdagareRuta(Ruta ruta)
     {
-        lista_rute.Add(ruta);
+        _dataContext.Routes.Add(ruta);
     }
 
     public void ShowMenu()
@@ -105,7 +103,7 @@ public class FlightManagement
             return;
         }
         
-        Ruta ruta = lista_rute.Find(r => r.IDRuta == idRuta);
+        Ruta ruta = _dataContext.Routes.Find(r => r.IDRuta == idRuta);
 
         if (ruta == null)
         {
@@ -131,7 +129,7 @@ public class FlightManagement
             return;
         }
 
-        lista_zboruri.Add(zborNou);
+        _dataContext.Flights.Add(zborNou);
         Console.WriteLine("Zborul a fost adaugat cu succes!");
         Console.ReadLine();
     }
@@ -141,11 +139,11 @@ public class FlightManagement
         Console.Write("\nIntroduceti ID-ul zborului selectat pentru stergere: ");
         string idZbor = Console.ReadLine();
 
-        Flight zborSters = lista_zboruri.Find(z => z.FlightId == idZbor);
+        Flight zborSters = _dataContext.Flights.Find(z => z.FlightId == idZbor);
 
         if (zborSters != null)
         {
-            lista_zboruri.Remove(zborSters);
+            _dataContext.Flights.Remove(zborSters);
             Console.WriteLine($"Zborul {idZbor} a fost sters!\n");
         }
         else
@@ -158,7 +156,7 @@ public class FlightManagement
 
     private void VizualizareListaZboruri()
     {
-        if (lista_zboruri.Count == 0)
+        if (_dataContext.Flights.Count == 0)
         {
             Console.WriteLine("Nu exista zboruri disponibile!");
             Console.ReadLine();
@@ -167,7 +165,7 @@ public class FlightManagement
         
         Console.WriteLine("\n*** LISTA ZBORURI DISPONIBILE ***");
 
-        foreach (var zbor in lista_zboruri)
+        foreach (var zbor in _dataContext.Flights)
         {
             Console.WriteLine($"\nID Zbor: {zbor.FlightId}");
             Console.WriteLine($"Ruta: {zbor.Route.OrasPlecare} -> {zbor.Route.OrasDestinatie}");
@@ -215,7 +213,7 @@ public class FlightManagement
         Console.Write("\nIntroduceti ID-ul ZBORULUI pe care doriti sa-l actualizati: ");
         string idZbor = Console.ReadLine();
         
-        Flight? zborActualizat = lista_zboruri.Find(z => z.FlightId == idZbor);
+        Flight? zborActualizat = _dataContext.Flights.Find(z => z.FlightId == idZbor);
 
         if (zborActualizat == null)
         {
@@ -346,7 +344,7 @@ public class FlightManagement
     private void ModificareRuta(Flight zborActualizat)
     {
         Console.WriteLine("-- RUTE EXISTENTE --\n");
-        foreach (var ruta in lista_rute)
+        foreach (var ruta in _dataContext.Routes)
         {
             Console.WriteLine(ruta);
         };
@@ -354,7 +352,7 @@ public class FlightManagement
         Console.Write("\nIntroduceti ID-ul rutei noi: ");
         string idRutaNoua = Console.ReadLine();
 
-        Ruta rutaNoua = lista_rute.Find(r => r.IDRuta == idRutaNoua);
+        Ruta rutaNoua = _dataContext.Routes.Find(r => r.IDRuta == idRutaNoua);
 
         if (rutaNoua != null)
         {
@@ -375,13 +373,13 @@ public class FlightManagement
     {
         Console.WriteLine("\n*** LISTA RUTELOR DISPONIBILE ***");
         
-        if (lista_rute.Count == 0)
+        if (_dataContext.Routes.Count == 0)
         {
             Console.WriteLine("Nu exista rute disponibile.");
         }
         else
         {
-            foreach (var ruta in lista_rute)
+            foreach (var ruta in _dataContext.Routes)
             {
                 Console.WriteLine(ruta);
             }

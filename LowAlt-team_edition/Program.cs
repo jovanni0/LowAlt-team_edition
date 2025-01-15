@@ -8,22 +8,32 @@ class Program
 {
     static void Main(string[] args)
     {
+        DataContext dataContext = new DataContext{
+            dataFolder = "data"
+        };
+
+        var dataLoader = new DataLoaderService(dataContext.dataFolder);
+        (var routes, var flights) = dataLoader.GetData();
+        dataContext.Routes = routes;
+        dataContext.Flights = flights;
+
+        var interfata = new UserInterface(dataContext);
+        interfata.StartInteraction();
+
+
         Console.Clear();
 
-        var dataLoader = new DataLoaderService("data");
-        (var routes, var flights) = dataLoader.GetData();
+
         // foreach(var route in routes) {
         //     Console.WriteLine(route);
         // }
         // foreach(var flight in flights) {
-        //     Console.WriteLine(flight);
+        //     Console.WriteLine(flight);n
         // }
 
-        // var interfata = new UserInterface(ZboruriTest, rute);
-        // interfata.StartInteraction();
 
-        var accountLoader = new AccountLoaderService("data");
-        var account = accountLoader.GetAccount("admin", "admin", flights);
-        Console.WriteLine(account);
+        // var accountLoader = new AccountLoaderService("data");
+        // var account = accountLoader.GetAccount("admin", "admin", flights);
+        // Console.WriteLine(account);
     }
 }

@@ -5,13 +5,14 @@ namespace LowAlt.cli;
 
 public class AccountManager : Messages
 {
-    private Passenger _user;
     private string _thisPath = "ACCOUNT MANAGEMENT";
+
+    private readonly DataContext _dataContext;
     
     
-    public AccountManager(Passenger user)
+    public AccountManager(DataContext dataContext)
     {
-        _user = user;
+        _dataContext = dataContext;
     }
 
     
@@ -69,14 +70,11 @@ public class AccountManager : Messages
                 return;
             }
 
-            var accountFinder = new AccountFinderService("data/accounts.txt");
-            MockPassanger? account = accountFinder.GetAccountFromFile(username, password);
+            AccountLoaderService accountLoader = new AccountLoaderService(_dataContext.dataFolder);
+            Passenger? user = accountLoader.GetAccount(username, password, _dataContext.Flights);
         
-            if (!(account == null)) {
-                bool isAdmin;
-                if (account.AccountType == "admin") isAdmin = true;
-                else isAdmin = false;
-                _user = new Passenger("1234567890123", account.Username, new List<Reservation>(), isAdmin);
+            if (user != null) {
+                _dataContext.User = user;
                 return;
             }
             
@@ -136,7 +134,7 @@ public class AccountManager : Messages
             bool isAdmin;
             if (newAccount.AccountType == "admin") isAdmin = true;
             else isAdmin = false;
-            _user = new Passenger("1234567890123", newAccount.Username, new List<Reservation>(), isAdmin);
+            _dataContext.User = new Passenger("1234567890123", newAccount.Username, new List<Reservation>(), isAdmin);
             
             // Console.Write("Invalid username. Would you like to try again? [Y/n]: ");
             // var answer = Console.ReadLine() ?? "y";

@@ -1,17 +1,12 @@
-using System.Net;
-using System.Reflection.Metadata;
-
 namespace LowAlt_team_edition.misc_classes;
 
 public class RezervariPasageri
 {
-    private Passenger _pasager;
-    private List<Flight> _listaZboruri;
+    private readonly DataContext _dataContext;
 
-    public RezervariPasageri(Passenger pasager, List<Flight> listaZboruri)
+    public RezervariPasageri(DataContext dataContext)
     {
-        _pasager = pasager;
-        _listaZboruri = listaZboruri;
+        _dataContext = dataContext;
     }
 
     public void InteractiunePasageri()
@@ -20,7 +15,7 @@ public class RezervariPasageri
         {
             Console.Clear();
             string optiune;
-            if (_pasager.IsLoggedIn == false)
+            if (_dataContext.User.IsLoggedIn == false)
             {
                 Console.WriteLine("Buna ziua! Se pare ca nu sunteti conectat la un cont.");
                 Console.WriteLine("Optiuni disponibile:\n(1): Parasire program\n(2): Vizualizare lista zboruri disponibile");
@@ -40,7 +35,7 @@ public class RezervariPasageri
             }
             else
             {
-                Console.WriteLine($"Buna ziua, {_pasager.Username}");
+                Console.WriteLine($"Buna ziua, {_dataContext.User.Username}");
                 Console.WriteLine("Optiuni disponibile:\n(1): Parasire program\n(2): Vizualize lista zboruri disponibile\n(3): Rezervare locuri zbor\n(4): Anulare rezervare\n(5): Vizualizare istoric rezervari proprii");
                 Console.WriteLine("Selectati optiunea dorita: ");
                 optiune = Console.ReadLine() ?? " ";
@@ -79,7 +74,7 @@ public class RezervariPasageri
         Console.Clear();
         int i = -1;
         Console.WriteLine("Zborurile disponibile sunt: ");
-        foreach (Flight zbor in _listaZboruri)
+        foreach (Flight zbor in _dataContext.Flights)
         {
             i++;
             if (zbor.AvailableSeats > 0)
@@ -116,7 +111,7 @@ public class RezervariPasageri
                 continue;
             }
 
-            if (nrZborIntreg < 0 || nrZborIntreg >= _listaZboruri.Count || _listaZboruri[nrZborIntreg].AvailableSeats == 0)
+            if (nrZborIntreg < 0 || nrZborIntreg >= _dataContext.Flights.Count || _dataContext.Flights[nrZborIntreg].AvailableSeats == 0)
             {
                 Console.WriteLine("Ne pare rau, dar zborul ales de dumneavoastra nu este disponibil momentan!");
                 Console.WriteLine("Incercati sa alegeti alt zbor.");
@@ -143,23 +138,20 @@ public class RezervariPasageri
                 Console.ReadLine();
                 continue;
             }
-            if (_listaZboruri[nrZborIntreg].AvailableSeats < numarLocuriInt)
+            if (_dataContext.Flights[nrZborIntreg].AvailableSeats < numarLocuriInt)
             {
                 Console.WriteLine("Ne pare rau, dar numarul introdus depaseste numarul de locuri disponibile ramase.");
                 Console.ReadLine();
                 continue;
             }
             
-            _pasager.AddReservation(new Reservation(_pasager,_listaZboruri[nrZborIntreg], numarLocuriInt));
-            _listaZboruri[nrZborIntreg].AddReservation(new Reservation(_pasager,_listaZboruri[nrZborIntreg], numarLocuriInt));
-            _listaZboruri[nrZborIntreg].AvailableSeats -= numarLocuriInt;
+            _dataContext.User.AddReservation(new Reservation(_dataContext.User,_dataContext.Flights[nrZborIntreg], numarLocuriInt));
+            _dataContext.Flights[nrZborIntreg].AddReservation(new Reservation(_dataContext.User,_dataContext.Flights[nrZborIntreg], numarLocuriInt));
+            _dataContext.Flights[nrZborIntreg].AvailableSeats -= numarLocuriInt;
             Console.WriteLine("Rezervarea a fost creata cu succes!");
-            Console.WriteLine($"Total plata: {new Reservation(_pasager,_listaZboruri[nrZborIntreg], numarLocuriInt).Price} RON");
+            Console.WriteLine($"Total plata: {new Reservation(_dataContext.User,_dataContext.Flights[nrZborIntreg], numarLocuriInt).Price} RON");
             break;
-
         }
-
-
     }
 
 /// <summary>
@@ -170,14 +162,14 @@ public class RezervariPasageri
         int i = -1;
         
         Console.Clear();
-        if (_pasager.PriorReservations.Count == 0)
+        if (_dataContext.User.PriorReservations.Count == 0)
         {
             Console.WriteLine("Lista dumneavoastra de rezervari este goala!");
         }
         else
         {
             Console.WriteLine("Lista dumneavoastra de rezervari este: ");
-            foreach (Reservation rezervare in _pasager.PriorReservations)
+            foreach (Reservation rezervare in _dataContext.User.PriorReservations)
             {
                 i++;
                 Console.Write($"({i}) ");
@@ -200,7 +192,7 @@ public class RezervariPasageri
             Console.WriteLine("Lista dumneavoastra de rezervari este: ");
             AfisareRezervari();
 
-            if (_pasager.PriorReservations.Count == 0)
+            if (_dataContext.User.PriorReservations.Count == 0)
             {
                 break;
             }
@@ -218,7 +210,7 @@ public class RezervariPasageri
                 continue;
             }
 
-            if (numarRezervareInt < 0 || numarRezervareInt >= _pasager.PriorReservations.Count)
+            if (numarRezervareInt < 0 || numarRezervareInt >= _dataContext.User.PriorReservations.Count)
             {
                 Console.WriteLine("Ne pare rau, dar rezervarea aleasa nu exista in lista!");
                 Console.WriteLine("Incercati sa alegeti o alta rezervare.");
@@ -226,9 +218,9 @@ public class RezervariPasageri
                 continue;
             }
 
-            _pasager.PriorReservations[numarRezervareInt].TargetFlight.AvailableSeats +=
-                _pasager.PriorReservations[numarRezervareInt].Seats;
-            _pasager.PriorReservations.RemoveAt(numarRezervareInt);
+            _dataContext.User.PriorReservations[numarRezervareInt].TargetFlight.AvailableSeats +=
+                _dataContext.User.PriorReservations[numarRezervareInt].Seats;
+            _dataContext.User.PriorReservations.RemoveAt(numarRezervareInt);
             Console.WriteLine("Rezervarea a fost eliminata cu succes!");
             break;
 

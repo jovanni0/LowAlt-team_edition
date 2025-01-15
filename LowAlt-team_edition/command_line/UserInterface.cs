@@ -5,15 +5,12 @@ namespace LowAlt_team_edition.command_line;
 
 public class UserInterface
 {
-    private Passenger user = new Passenger("", "", new List<Reservation>(), false);
-    private List<Flight> _fleet;
-    private List<Ruta> _routes;
+    private readonly DataContext _dataContext;
 
 
-    public UserInterface(List<Flight> fleet, List<Ruta> routes)
+    public UserInterface(DataContext dataContext)
     {
-        _fleet = fleet;
-        _routes = routes;
+        _dataContext = dataContext;
     }
 
 
@@ -21,7 +18,7 @@ public class UserInterface
     {
         while (true)
         {
-            if (!user.IsLoggedIn) {
+            if (!_dataContext.User.IsLoggedIn) {
                 Console.Clear();
                 Console.WriteLine("[GUEST PANEL]");
                 Console.WriteLine("You are not logged in. Your options will be limited.");
@@ -30,11 +27,11 @@ public class UserInterface
 
                 switch(option.ToLower()) {
                     case "y":
-                        var interactiunePasageri = new RezervariPasageri(user, _fleet);
+                        var interactiunePasageri = new RezervariPasageri(_dataContext);
                         interactiunePasageri.InteractiunePasageri();
                         break;
                     case "n":
-                        var accountManager = new AccountManager(user);
+                        var accountManager = new AccountManager(_dataContext);
                         accountManager.StartInteraction();
                         break;
                     default:
@@ -42,7 +39,7 @@ public class UserInterface
                         break;
                 }
             }
-            else if (user.IsAdmin) {
+            else if (_dataContext.User.IsAdmin) {
                 Console.Clear();
                 Console.WriteLine(
                     "[ADMIN PANEL]\n"+
@@ -59,14 +56,14 @@ public class UserInterface
                     case null:
                         break;
                     case "0":
-                        user = new Passenger("", "", new List<Reservation>(), false);
+                        _dataContext.User = new Passenger("", "", new List<Reservation>(), false);
                         break;
                     case "1":
-                        var flightManagement = new FlightManagement(_fleet, _routes);
+                        var flightManagement = new FlightManagement(_dataContext);
                         flightManagement.ShowMenu();
                         break;
                     case "2":
-                        var passengerManagement = new RezervariPasageri(user, _fleet);
+                        var passengerManagement = new RezervariPasageri(_dataContext);
                         passengerManagement.InteractiunePasageri();
                         break;
                     case "3":
@@ -92,10 +89,10 @@ public class UserInterface
                     case null:
                         break;
                     case "0":
-                        user = new Passenger("", "", new List<Reservation>(), false);
+                        _dataContext.User = new Passenger("", "", new List<Reservation>(), false);
                         break;
                     case "1":
-                        var passengerManagement = new RezervariPasageri(user, _fleet);
+                        var passengerManagement = new RezervariPasageri(_dataContext);
                         passengerManagement.InteractiunePasageri();
                         break;
                     default:
