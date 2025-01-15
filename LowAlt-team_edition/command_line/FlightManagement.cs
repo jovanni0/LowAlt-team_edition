@@ -52,10 +52,10 @@ public class FlightManagement
                     VizualizareRuteDisponibile();
                     break;
                 case "6":
-                    
+                    AdaugareRutaNoua();
                     break;
                 case "7":
-                    
+                    StergereRuta();
                     break;
                 default:
                     Console.WriteLine("Optiune invalida!");
@@ -65,6 +65,9 @@ public class FlightManagement
         }
     }
 
+    /// <summary>
+    /// Adaugare zbor in lista pentru admini
+    /// </summary>
     private void AdaugareZbor()
     {
         Console.Write("\nIntroduceti ID zbor: ");
@@ -140,6 +143,9 @@ public class FlightManagement
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Sterge un zbor din lista adminilor
+    /// </summary>
     private void StergereZbor()
     {
         Console.Write("\nIntroduceti ID-ul zborului selectat pentru stergere: ");
@@ -213,6 +219,9 @@ public class FlightManagement
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Modifica datele unui zbor, doar adminii au acces la zona de modificari
+    /// </summary>
     private void ActualizareInformatiiZbor()
     {
         Console.WriteLine("*** ACTUALIZARE INFORMATII ZBOR ***\n");
@@ -298,6 +307,10 @@ public class FlightManagement
         }
     }
 
+    /// <summary>
+    /// Modifica ora de plecare a unui zbor
+    /// </summary>
+    /// <param name="zborActualizat"></param>
     private void ModificareOraPlecare(Flight zborActualizat)
     {
         Console.Write("\nIntroduceti noua ora de plecare (HH:MM): ");
@@ -347,6 +360,10 @@ public class FlightManagement
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Modifica datele unei rute existente
+    /// </summary>
+    /// <param name="zborActualizat"></param>
     private void ModificareRuta(Flight zborActualizat)
     {
         Console.WriteLine("* RUTE EXISTENTE *\n");
@@ -389,6 +406,74 @@ public class FlightManagement
                 Console.WriteLine(ruta);
             }
         }
+        Console.ReadLine();
+    }
+
+    /// <summary>
+    /// Adauga o ruta noua in lista de rute
+    /// </summary>
+    private void AdaugareRutaNoua()
+    {
+        Console.Write("\nIntroduceti ID-ul rutei noi: ");
+        string idRutaNoua = Console.ReadLine();
+        
+        Console.Write("Introduceti orasul de plecare: ");
+        string orasPlecare = Console.ReadLine();
+        
+        Console.Write("Introduceti orasul destinatie: ");
+        string orasDestinatie = Console.ReadLine();
+        
+        Console.Write("Introduceti numarul de km: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numarulKm) || numarulKm <= 0)
+        {
+            Console.WriteLine("Numar de km invalid!");
+            Console.ReadLine();
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(idRutaNoua) || string.IsNullOrWhiteSpace(orasPlecare) ||
+            string.IsNullOrWhiteSpace(orasDestinatie) || string.IsNullOrWhiteSpace(orasPlecare))
+        {
+            Console.WriteLine("Date invalide!");
+            Console.ReadLine();
+            return;
+        }
+
+        if (_dataContext.Routes.Any(r => r.IDRuta == idRutaNoua))
+        {
+            Console.WriteLine($"Ruta cu ID-ul {idRutaNoua} exista deja!");
+            Console.ReadLine();
+            return;
+        }
+
+        Ruta rutaNoua = new Ruta(orasPlecare, orasDestinatie, numarulKm, idRutaNoua);
+        _dataContext.Routes.Add(rutaNoua);
+        
+        Console.WriteLine("\nRuta a fost adaugata cu succes!");
+        Console.ReadLine();
+    }
+
+    /// <summary>
+    /// Sterge o ruta din lista rutelor
+    /// </summary>
+    private void StergereRuta()
+    {
+        Console.Write("\nIntroduceti ID-ul rutei pentru stergere: ");
+        string idRuta = Console.ReadLine();
+        
+        Ruta rutaStearsa = _dataContext.Routes.FirstOrDefault(r => r.IDRuta == idRuta);
+
+        if (rutaStearsa != null)
+        {
+            _dataContext.Routes.Remove(rutaStearsa);
+            Console.WriteLine($"Ruta {idRuta} a fost stearsa!");
+        }
+        else
+        {
+            Console.WriteLine($"Ruta {idRuta} nu exista!");
+        }
+
         Console.ReadLine();
     }
 }
