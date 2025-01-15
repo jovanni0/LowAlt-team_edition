@@ -13,7 +13,16 @@ public class AccountWriterService : Messages
     }
 
 
-    public void WriteAccountToFile(MockPassanger passenger) {
+    public void WriteAccountsToFile(List<Passenger> passengers) {
+        foreach (var passenger in passengers) {
+            MockPassanger mockPassanger = PassengerToMock(passenger);
+            WriteMockToFile(mockPassanger);
+        }
+    }
+
+
+    private void WriteMockToFile(MockPassanger passenger) 
+    {
         string entry = StringifyPassenger(passenger);
 
         if (!File.Exists(_pathToFile)) {
@@ -26,6 +35,28 @@ public class AccountWriterService : Messages
 
         File.AppendAllText(_pathToFile, "\n" + entry);
     }
+
+
+    private MockPassanger PassengerToMock(Passenger passenger)
+    {
+        string accountType = "user";
+        if (passenger.IsAdmin) accountType = "admin";
+
+        List<string> reservations = new List<string>();
+        foreach (var item in passenger.PriorReservations) {
+            string reserv = $"{item.TargetFlight.FlightId}-{item}";
+            reservations.Add(reserv);
+        }
+
+        return new MockPassanger(
+            accountType,
+            passenger.Username,
+            passenger.Password,
+            passenger.Cnp,
+            reservations
+        );
+    }
+
 
     public string StringifyPassenger(MockPassanger passenger)
     {

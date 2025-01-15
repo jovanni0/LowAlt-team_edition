@@ -29,6 +29,7 @@ public class AccountLoaderService : Messages
         Passenger passenger = new Passenger(
             mockPassanger.Cnp,
             mockPassanger.Username,
+            mockPassanger.Password,
             new List<Reservation>(),
             mockPassanger.AccountType == "admin" ? true : false
         );

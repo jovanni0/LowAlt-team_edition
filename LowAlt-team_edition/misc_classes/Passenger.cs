@@ -18,6 +18,11 @@ public class Passenger
     public string Username { get; init; }
 
     /// <summary>
+    /// password of the account
+    /// </summary>
+    public string Password { get; init; }
+
+    /// <summary>
     /// indicates if the passenger is admin
     /// </summary>
     public bool IsAdmin { get; init; }
@@ -26,11 +31,21 @@ public class Passenger
     /// indicates if the pasaenger is logged in
     /// </summary>
     public bool IsLoggedIn => !string.IsNullOrWhiteSpace(Username);
+
+    public Passenger()
+    {
+        Cnp = string.Empty;
+        Username = string.Empty;
+        Password = string.Empty;
+        PriorReservations = new List<Reservation>();
+        IsAdmin = false;
+    }
     
-    public Passenger(string cnp, string username, List<Reservation> priorReservations, bool isAdmin)
+    public Passenger(string cnp, string username, string password, List<Reservation> priorReservations, bool isAdmin)
     {
         Cnp = cnp;
         Username = username;
+        Password = password;
         PriorReservations = priorReservations;
         IsAdmin = isAdmin;
     }

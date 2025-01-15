@@ -56,7 +56,7 @@ public class UserInterface
                     case null:
                         break;
                     case "0":
-                        _dataContext.User = new Passenger("", "", new List<Reservation>(), false);
+                        _dataContext.User = new Passenger();
                         break;
                     case "1":
                         var flightManagement = new FlightManagement(_dataContext);
@@ -89,7 +89,7 @@ public class UserInterface
                     case null:
                         break;
                     case "0":
-                        _dataContext.User = new Passenger("", "", new List<Reservation>(), false);
+                        _dataContext.User = new Passenger();
                         break;
                     case "1":
                         var passengerManagement = new RezervariPasageri(_dataContext);

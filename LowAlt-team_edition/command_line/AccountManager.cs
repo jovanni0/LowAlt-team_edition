@@ -1,7 +1,7 @@
 using LowAlt_team_edition.misc_classes;
 using LowAlt_team_edition.services;
 
-namespace LowAlt.cli;
+namespace LowAlt_team_edition.command_line;
 
 public class AccountManager : Messages
 {
@@ -97,44 +97,46 @@ public class AccountManager : Messages
             
             Console.Write("Username: ");
             string? username = Console.ReadLine();
-            if (string.IsNullOrEmpty(username)) {
+            if (string.IsNullOrWhiteSpace(username)) {
                 ShowErrorAndWaitConfirmation("Invalid username.");
                 continue;
             }
 
             Console.Write("Password: ");
             string? password = Console.ReadLine();
-            if (string.IsNullOrEmpty(password)) {
+            if (string.IsNullOrWhiteSpace(password)) {
                 ShowErrorAndWaitConfirmation("Invalid password.");
                 continue;
             }
 
-            Console.WriteLine("Name: ");
+            Console.Write("Name: ");
             string? name = Console.ReadLine();
-            if (string.IsNullOrEmpty(name)) {
+            if (string.IsNullOrWhiteSpace(name)) {
                 ShowErrorAndWaitConfirmation("Invalid name.");
                 continue;
             }
 
-            Console.WriteLine("CNP: ");
+            Console.Write("CNP: ");
             string? cnp = Console.ReadLine();
-            if (string.IsNullOrEmpty(cnp)) {
+            if (string.IsNullOrWhiteSpace(cnp)) {
                 ShowErrorAndWaitConfirmation("Invalid CNP.");
                 continue;
             }
-        
-            MockPassanger newAccount = new MockPassanger(
-                "user",
+
+            Passenger user = new Passenger(
+                cnp,
                 username,
                 password,
-                cnp,
-                new List<string>()
+                new List<Reservation>(),
+                false
             );
 
-            bool isAdmin;
-            if (newAccount.AccountType == "admin") isAdmin = true;
-            else isAdmin = false;
-            _dataContext.User = new Passenger("1234567890123", newAccount.Username, new List<Reservation>(), isAdmin);
+            // var writer = new AccountWriterService("data/accs.txt");
+            // writer.WriteAccountToFile(user);
+
+            _dataContext.User = user;
+
+            return;
             
             // Console.Write("Invalid username. Would you like to try again? [Y/n]: ");
             // var answer = Console.ReadLine() ?? "y";

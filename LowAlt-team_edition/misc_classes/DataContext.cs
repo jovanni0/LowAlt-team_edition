@@ -6,12 +6,7 @@ public class DataContext
 
     public List<Ruta> Routes = new List<Ruta>();
 
-    public Passenger User = new Passenger(
-        string.Empty,
-        string.Empty,
-        new List<Reservation>(),
-        false
-    );
+    public Passenger User = new Passenger();
 
     public string dataFolder = string.Empty;
 
