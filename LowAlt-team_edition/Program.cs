@@ -20,20 +20,7 @@ class Program
         var interfata = new UserInterface(dataContext);
         interfata.StartInteraction();
 
-
-        Console.Clear();
-
-
-        // foreach(var route in routes) {
-        //     Console.WriteLine(route);
-        // }
-        // foreach(var flight in flights) {
-        //     Console.WriteLine(flight);n
-        // }
-
-
-        // var accountLoader = new AccountLoaderService("data");
-        // var account = accountLoader.GetAccount("admin", "admin", flights);
-        // Console.WriteLine(account);
+        AccountWriterService accountWriter = new AccountWriterService(dataContext.dataFolder + "accounts2.txt");
+        accountWriter.WriteAccountsToFile(dataContext.Passengers);
     }
 }

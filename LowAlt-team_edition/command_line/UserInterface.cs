@@ -1,4 +1,3 @@
-using LowAlt.cli;
 using LowAlt_team_edition.misc_classes;
 
 namespace LowAlt_team_edition.command_line;
@@ -43,6 +42,7 @@ public class UserInterface
                 Console.Clear();
                 Console.WriteLine(
                     "[ADMIN PANEL]\n"+
+                    "   (9): ShutDown\n"+
                     "   (0): LogOut\n" +
                     "   (1): Gestionare Zboruri\n" +
                     "   (2): Optiuni Pasager\n" +
@@ -53,8 +53,8 @@ public class UserInterface
                 string? option = Console.ReadLine();
 
                 switch(option) {
-                    case null:
-                        break;
+                    case null: break;
+                    case "9": return;
                     case "0":
                         _dataContext.User = new Passenger();
                         break;
@@ -79,6 +79,7 @@ public class UserInterface
                 Console.Clear();
                 Console.WriteLine(
                     "[USER PANEL]\n"+
+                    "   (9): ShutDown\n" +
                     "   (0): LogOut\n" +
                     "   (1): Optiuni Pasager\n"
                 );
@@ -87,8 +88,8 @@ public class UserInterface
                 string? option = Console.ReadLine();
 
                 switch(option) {
-                    case null:
-                        break;
+                    case null: break;
+                    case "9": return;
                     case "0":
                         _dataContext.User = new Passenger();
                         break;

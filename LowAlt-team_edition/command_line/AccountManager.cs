@@ -101,6 +101,17 @@ public class AccountManager : Messages
                 ShowErrorAndWaitConfirmation("Invalid username.");
                 continue;
             }
+            bool isTaken = false;
+            foreach (var account in _dataContext.Passengers) {
+                if (account.Username == username) {
+                    isTaken = true;
+                    break;
+                }
+            }
+            if (isTaken) {
+                Console.WriteLine("This username is taken.");
+                return;
+            }
 
             Console.Write("Password: ");
             string? password = Console.ReadLine();
@@ -131,9 +142,7 @@ public class AccountManager : Messages
                 false
             );
 
-            // var writer = new AccountWriterService("data/accs.txt");
-            // writer.WriteAccountToFile(user);
-
+            _dataContext.Passengers.Add(user);
             _dataContext.User = user;
 
             return;
