@@ -157,6 +157,11 @@ public class RapoarteSiStatistici
             Console.Clear();
             int numarPasagerInt = -1;
             ListaPasageri();
+            if (_dataContext.Passengers.Count == 0)
+            {
+                Console.WriteLine("Ne pare rau, dar momentan lista de pasageri este goala!");
+                break;
+            }
             Console.WriteLine("Selectati pasagerul dorit: ");
             string numarPasager = Console.ReadLine()??" ";
             try

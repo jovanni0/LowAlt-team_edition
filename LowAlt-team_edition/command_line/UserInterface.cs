@@ -1,4 +1,4 @@
-using LowAlt.cli;
+using LowAlt_team_edition.command_line;
 using LowAlt_team_edition.misc_classes;
 
 namespace LowAlt_team_edition.command_line;
@@ -22,15 +22,17 @@ public class UserInterface
                 Console.Clear();
                 Console.WriteLine("[GUEST PANEL]");
                 Console.WriteLine("You are not logged in. Your options will be limited.");
-                Console.Write("Continue (Y/n)?: ");
-                string option = Console.ReadLine() ?? "y";
+                Console.WriteLine("(0): Exit program\n(1): Continue as guest\n(2): Registrer");
+                Console.Write("Select your option: ");
+                string option = Console.ReadLine() ?? "1";
 
                 switch(option.ToLower()) {
-                    case "y":
+                    case "0": return;
+                    case "1":
                         var interactiunePasageri = new RezervariPasageri(_dataContext);
                         interactiunePasageri.InteractiunePasageri();
                         break;
-                    case "n":
+                    case "2":
                         var accountManager = new AccountManager(_dataContext);
                         accountManager.StartInteraction();
                         break;
