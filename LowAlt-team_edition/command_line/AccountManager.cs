@@ -37,8 +37,8 @@ public class AccountManager : Messages
             switch (option)
             {
                 case "0": return;
-                case "1": LogIn(); break;
-                case "2": SignUp(); break;
+                case "1": LogIn(); return;
+                case "2": SignUp(); return;
             }
         }
     }
