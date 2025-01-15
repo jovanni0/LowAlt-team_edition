@@ -20,28 +20,33 @@ public class RapoarteSiStatistici
         {
             Console.Clear();
             string optiune;
-            Console.WriteLine("Bine ati revenit!");
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("Optiuni:\n(0): Parasire program\n(1): Vizualizarea zborurilor cu cele mai multe locuri rezervate\n(2): Vizualizarea veniturilor generate de un zbor\n(3): Generare raport zilnic al veniturilor totale\n(4): Vizualizarea platilor efectuate de un pasager");
-            Console.WriteLine("Selectati optiunea dorita: ");
+            Console.WriteLine("\nBine ati revenit!");
+            Console.WriteLine("(0): Parasire program\n(1): Vizualizarea zborurilor cu cele mai multe locuri rezervate\n(2): Vizualizarea veniturilor generate de un zbor\n(3): Generare raport zilnic al veniturilor totale\n(4): Vizualizarea platilor efectuate de un pasager");
+            Console.Write("Selectati optiunea dorita: ");
             optiune = Console.ReadLine()??" ";
 
             switch (optiune)
             {
-                case "0": return;
-                case "1": ZboruriRezervate();
+                case "0": 
+                    return;
+                case "1": 
+                    ZboruriRezervate();
                     Console.ReadLine();
                     break;
-                case "2": VenituriZbor();
+                case "2": 
+                    VenituriZbor();
                     Console.ReadLine();
                     break;
-                case "3": RaportZilnic();
+                case "3": 
+                    RaportZilnic();
                     Console.ReadLine();
                     break;
-                case "4": PlatiPasager();
+                case "4": 
+                    PlatiPasager();
                     Console.ReadLine();
                     break;
-                default: Console.WriteLine("Ne pare rau, dar optiunea selectata nu exista!");
+                default: 
+                    Console.WriteLine("Ne pare rau, dar optiunea selectata nu exista!");
                     Console.WriteLine("Incercati sa introduceti o alta optiune.");
                     Console.ReadLine();
                     continue;
@@ -66,7 +71,7 @@ public class RapoarteSiStatistici
         {
             Console.WriteLine(zbor.ToString());
             Console.WriteLine($"Locuri rezervate: {zbor.LocuriRezervate()}");
-            Console.WriteLine("\n**************************************");
+            Console.WriteLine("–––––––––––––––––––––––––");
         }
     }
     
@@ -78,13 +83,13 @@ public class RapoarteSiStatistici
         
         Console.Clear();
         int i = -1;
-        Console.WriteLine("Zborurile sunt: ");
+        Console.WriteLine("\nZborurile sunt: ");
         foreach (Flight zbor in _dataContext.Flights)
         {
             i++; 
             Console.Write($"({i}) ");
             Console.WriteLine(zbor.ToString());
-            Console.WriteLine("\n******************************\n");
+            Console.WriteLine("–––––––––––––––––––––––––");
             
         }
     }
@@ -99,7 +104,7 @@ public class RapoarteSiStatistici
             Console.Clear();
             int numarZborInt = -1;
             ListaZboruri();
-            Console.WriteLine("Selectati zborul pentru care doriti sa vizualizati veniturile:");
+            Console.Write("Selectati zborul pentru care doriti sa vizualizati veniturile: ");
             string numarZbor = Console.ReadLine()??" ";
             try
             {
@@ -111,14 +116,14 @@ public class RapoarteSiStatistici
                 continue;
             }
             
-            if(numarZborInt < 0|| numarZborInt >= _dataContext.Flights.Count)
+            if(numarZborInt < 0 || numarZborInt >= _dataContext.Flights.Count)
             {
-                Console.WriteLine("Zborul selectat nu exista!\nIncercati sa introduceti un alt zbor.");
+                Console.WriteLine("\nZborul selectat nu exista!\nIncercati sa introduceti un alt zbor.");
                 Console.ReadLine();
                 continue;
             }
             
-            Console.WriteLine($"Venitul generat de zborul selectat este de {_dataContext.Flights[numarZborInt].GetRevenue()} RON");
+            Console.WriteLine($"\nVenitul generat de zborul selectat este de {_dataContext.Flights[numarZborInt].GetRevenue()} RON");
             break;
         }
     }
@@ -139,13 +144,13 @@ public class RapoarteSiStatistici
     {
         Console.Clear();
         int i = -1;
-        Console.WriteLine("Lista de pasageri este: ");
+        Console.WriteLine("\nLista de pasageri este: ");
         foreach (Passenger pasager in _dataContext.Passengers)
         {
             i++;
             Console.Write($"({i}) ");
             Console.WriteLine(pasager.ToString());
-            Console.WriteLine("\n**********************************");
+            Console.WriteLine("–––––––––––––––––––––––––");
         }
         
     }
@@ -162,10 +167,10 @@ public class RapoarteSiStatistici
             ListaPasageri();
             if (_dataContext.Passengers.Count == 0)
             {
-                Console.WriteLine("Ne pare rau, dar momentan lista de pasageri este goala!");
+                Console.WriteLine("\nNe pare rau, dar momentan lista de pasageri este goala!");
                 break;
             }
-            Console.WriteLine("Selectati pasagerul dorit: ");
+            Console.Write("\nSelectati pasagerul dorit: ");
             string numarPasager = Console.ReadLine()??" ";
             try
             {
@@ -180,24 +185,20 @@ public class RapoarteSiStatistici
 
             if (numarPasagerInt < 0 || numarPasagerInt >= _dataContext.Passengers.Count)
             {
-                Console.WriteLine("Pasagerul selectat nu exista in lista!\nIncercati sa selectati un alt pasager.");
+                Console.WriteLine("\nPasagerul selectat nu exista in lista!\nIncercati sa selectati un alt pasager.");
                 Console.ReadLine();
                 continue;
             }
 
-            Console.WriteLine("Platile efectuate de pasagerul selectat sunt:\n ");
+            Console.WriteLine("\nPlatile efectuate de pasagerul selectat sunt:\n");
             int plata = 0;
             foreach (Reservation rezervare in _dataContext.Passengers[numarPasagerInt].PriorReservations)
             {
                 plata++;
                 Console.WriteLine($"Plata numarul {plata}: {rezervare.TargetFlight} - {rezervare.Price} RON");
-                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("–––––––––––––––––––––––––");
             }
-
             break;
-
-
         }
-
     }
 }

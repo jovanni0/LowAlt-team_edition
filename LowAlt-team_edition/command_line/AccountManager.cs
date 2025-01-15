@@ -27,9 +27,9 @@ public class AccountManager : Messages
             Console.Clear();
             Console.WriteLine(
                 $"[{_thisPath}]\n" +
-                "   (0): exit\n" +
-                "   (1): log in\n" +
-                "   (2): sign up"
+                "   (0): Exit\n" +
+                "   (1): Log in\n" +
+                "   (2): Sign up"
             );
             Console.Write(">> ");
             var option = Console.ReadLine() ?? "0";
@@ -59,14 +59,14 @@ public class AccountManager : Messages
             string? username = Console.ReadLine();
             if (string.IsNullOrEmpty(username))
             {
-                ShowErrorAndWaitConfirmation("Invalid username.");
+                ShowErrorAndWaitConfirmation("Invalid username!");
                 return;
             }
             Console.Write("Password: ");
             string? password = Console.ReadLine();
             if (string.IsNullOrEmpty(password))
             {
-                ShowErrorAndWaitConfirmation("Invalid password.");
+                ShowErrorAndWaitConfirmation("Invalid password!");
                 return;
             }
 
@@ -98,7 +98,7 @@ public class AccountManager : Messages
             Console.Write("Username: ");
             string? username = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(username)) {
-                ShowErrorAndWaitConfirmation("Invalid username.");
+                ShowErrorAndWaitConfirmation("Invalid username!");
                 continue;
             }
             bool isTaken = false;
@@ -109,21 +109,21 @@ public class AccountManager : Messages
                 }
             }
             if (isTaken) {
-                Console.WriteLine("This username is taken.");
+                Console.WriteLine("This username is taken!");
                 return;
             }
 
             Console.Write("Password: ");
             string? password = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(password)) {
-                ShowErrorAndWaitConfirmation("Invalid password.");
+                ShowErrorAndWaitConfirmation("Invalid password!");
                 continue;
             }
 
             Console.Write("Name: ");
             string? name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(name)) {
-                ShowErrorAndWaitConfirmation("Invalid name.");
+                ShowErrorAndWaitConfirmation("Invalid name!");
                 continue;
             }
 
@@ -131,7 +131,7 @@ public class AccountManager : Messages
             string? cnp = Console.ReadLine()??" ";
             if ((string.IsNullOrWhiteSpace(cnp))|| (!VerificareCnpService.verificare(cnp))) {
                 
-                ShowErrorAndWaitConfirmation("Invalid CNP.");
+                ShowErrorAndWaitConfirmation("Invalid CNP!");
                 continue;
             }
 

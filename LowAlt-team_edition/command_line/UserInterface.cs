@@ -19,7 +19,7 @@ public class UserInterface
         {
             if (!_dataContext.User.IsLoggedIn) {
                 Console.Clear();
-                Console.WriteLine("[GUEST PANEL]");
+                Console.WriteLine("\n[GUEST PANEL]");
                 Console.WriteLine("You are not logged in. Your options will be limited.");
                 Console.WriteLine("(0): Exit program\n(1): Continue as guest\n(2): Register");
                 Console.Write("Select your option: ");
@@ -43,7 +43,7 @@ public class UserInterface
             else if (_dataContext.User.IsAdmin) {
                 Console.Clear();
                 Console.WriteLine(
-                    "[ADMIN PANEL]\n"+
+                    "\n[ADMIN PANEL]\n"+
                     "   (9): ShutDown\n"+
                     "   (0): LogOut\n" +
                     "   (1): Gestionare Zboruri\n" +
@@ -80,7 +80,7 @@ public class UserInterface
             else {
                 Console.Clear();
                 Console.WriteLine(
-                    "[USER PANEL]\n"+
+                    "\n[USER PANEL]\n"+
                     "   (9): ShutDown\n" +
                     "   (0): LogOut\n" +
                     "   (1): Optiuni Pasager\n"

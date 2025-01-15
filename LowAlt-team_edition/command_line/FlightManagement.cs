@@ -207,7 +207,7 @@ public class FlightManagement
                 Console.WriteLine("Pret bilet: Necunoscut");
             }
             
-            Console.WriteLine("\n--------------------------------------------");
+            Console.WriteLine("\n–––––––––––––––––––––––––");
         }
 
         Console.ReadLine();
@@ -228,7 +228,7 @@ public class FlightManagement
             return;
         }
         
-        Console.WriteLine($"-- Detalii curente zbor {zborActualizat.FlightId} --");
+        Console.WriteLine($"* Detalii curente zbor {zborActualizat.FlightId} *");
         Console.WriteLine($"Ruta: {zborActualizat.Route.OrasPlecare} -> {zborActualizat.Route.OrasDestinatie}");
 
         if (zborActualizat is LocalFlight)
@@ -300,7 +300,7 @@ public class FlightManagement
 
     private void ModificareOraPlecare(Flight zborActualizat)
     {
-        Console.Write("\nIntroduceti noua ora de plecare: ");
+        Console.Write("\nIntroduceti noua ora de plecare (HH:MM): ");
 
         if (TimeOnly.TryParse(Console.ReadLine(), out TimeOnly oraNouaPlecare))
         {
@@ -349,7 +349,7 @@ public class FlightManagement
 
     private void ModificareRuta(Flight zborActualizat)
     {
-        Console.WriteLine("-- RUTE EXISTENTE --\n");
+        Console.WriteLine("* RUTE EXISTENTE *\n");
         foreach (var ruta in _dataContext.Routes)
         {
             Console.WriteLine(ruta);
@@ -373,15 +373,14 @@ public class FlightManagement
 
         Console.ReadLine();
     }
-
-
+    
     public void VizualizareRuteDisponibile()
     {
         Console.WriteLine("\n*** LISTA RUTELOR DISPONIBILE ***");
         
         if (_dataContext.Routes.Count == 0)
         {
-            Console.WriteLine("Nu exista rute disponibile.");
+            Console.WriteLine("Nu exista rute disponibile!");
         }
         else
         {
