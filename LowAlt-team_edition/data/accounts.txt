@@ -1,5 +1,5 @@
 ACCOUNT_TYPE USERNAME PASSWORD CNP FLIGHT_ID-SEATS(0+)
 ------------------------------------------------------
-admin admin admin 1234567890123 RO101-10 RO102-1 RO102-1
-user user user 1234567890123 RO102-1
-user test1 test123 1234567890123 RO102-2
+admin admin admin 1234567890123 KR101-3 JP102-4 IN107-2
+user user user 1234567890123 TR104-0 CA110-3
+user test1 test123 1234567890123 EA108-3 CH105-4

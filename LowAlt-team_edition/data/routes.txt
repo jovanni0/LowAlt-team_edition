@@ -1,4 +1,12 @@
 PLECARE-SOSIRE KM ID
 --------------------
-Timisoara-Arad 87 01
-Brasov-Tokio 1402 02
+Seul-Busan 325 01
+Osaka-Tokyo 500 02
+Beijing-Hakodate 2040 03
+Istanbul-Tel_Aviv 1121 04
+Shanghai-Fukuoka 857 05
+New_York-Paris 3400 06
+New_Delhi-Sydney 10422 07
+Dubai-Madrid 5659 08
+Wuhan-Chongqing 470 09
+Toronto-Calgary 2718 10
