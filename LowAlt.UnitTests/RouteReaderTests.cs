@@ -10,7 +10,7 @@ public class RouteReaderTests
     [TestMethod]
     public void TryParseRoute_CorrectEntry_True()
     {
-        RouteReaderService routeReaderService = new RouteReaderService("somepath");
+        RouteReaderService routeReaderService = new RouteReaderService("somepath", new MockLogger());
         Ruta route;
         Ruta expectedRoute = new Ruta("Timisoara", "Arad", 87, "01");
 
@@ -26,7 +26,7 @@ public class RouteReaderTests
     [TestMethod]
     public void TryParseRoute_InvalidLocation_False()
     {
-        RouteReaderService routeReaderService = new RouteReaderService("somepath");
+        RouteReaderService routeReaderService = new RouteReaderService("somepath", new MockLogger());
         Ruta route;
 
         var success = routeReaderService.TryParseRoute(
@@ -41,7 +41,7 @@ public class RouteReaderTests
     [TestMethod]
     public void TryParseRoute_OutOfBoundsKilometers_False()
     {
-        RouteReaderService routeReaderService = new RouteReaderService("somepath");
+        RouteReaderService routeReaderService = new RouteReaderService("somepath", new MockLogger());
         Ruta route;
 
         var success = routeReaderService.TryParseRoute(
@@ -56,7 +56,7 @@ public class RouteReaderTests
     [TestMethod]
     public void TryParseRoute_ZeroKilometers_False()
     {
-        RouteReaderService routeReaderService = new RouteReaderService("somepath");
+        RouteReaderService routeReaderService = new RouteReaderService("somepath", new MockLogger());
         Ruta route;
 
         var success = routeReaderService.TryParseRoute(
@@ -71,7 +71,7 @@ public class RouteReaderTests
     [TestMethod]
     public void TryParseRoute_NotEnoughParameters_False()
     {
-        RouteReaderService routeReaderService = new RouteReaderService("somepath");
+        RouteReaderService routeReaderService = new RouteReaderService("somepath", new MockLogger());
         Ruta route;
 
         var success = routeReaderService.TryParseRoute(
@@ -86,7 +86,7 @@ public class RouteReaderTests
     [TestMethod]
     public void TryParseRoute_LotsOfParameters_True()
     {
-        RouteReaderService routeReaderService = new RouteReaderService("somepath");
+        RouteReaderService routeReaderService = new RouteReaderService("somepath", new MockLogger());
         Ruta route;
         Ruta expectedRoute = new Ruta("Timisoara", "Arad", 100, "01");
 

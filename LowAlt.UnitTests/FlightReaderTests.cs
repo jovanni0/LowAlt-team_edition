@@ -9,7 +9,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_CorrectEntry_True()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -23,7 +23,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_InvalidType_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -37,7 +37,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_InvalidDepartureTime_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -51,7 +51,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_OutOfBoundsFlightTime_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -65,7 +65,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_InvalidFormatFlightTime_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -79,7 +79,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_OutOfBoundsSeats_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -93,7 +93,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_InvalidFormatSeats_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -107,7 +107,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_OutOfBoundsAvailableSeats_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -121,7 +121,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_ZeroSeats_True()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -135,7 +135,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_InvalidFormatAvailableSeats_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -149,7 +149,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_MoreFieleds_True()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
@@ -163,7 +163,7 @@ public class FlightReaderTests
     [TestMethod]
     public void TryParseFlight_NotEnoughFieleds_False()
     {
-        FlightReaderService flightReaderService = new FlightReaderService("somepath");
+        FlightReaderService flightReaderService = new FlightReaderService("somepath", new MockLogger());
         MockFlight flight;
 
         var success = flightReaderService.TryParseFlight(
