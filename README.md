@@ -1,71 +1,74 @@
-# Rezervări zboruri
-Să se dezvolte un sistem software, implementat în C# (aplicație consolă), pentru
-gestionarea rezervării de zboruri ale unei companii aeriene. Sistemul trebuie să permită
-gestionarea zborurilor, înregistrarea clienților, realizarea de rezervări, calcularea
-costurilor.
+# Rezervări Zboruri
 
-  ## Contextul Sistemului
-  1. Compania aeriană:
-    - Are un nume, o flotă de avioane și o listă de rute disponibile. Pentru o rută se cunosc: oraș de plecare, oraș de destinație și nr. de kilometri.
-    - Permite rezervarea biletelor pentru pasageri.
-    - Înregistrează toate rezervările efectuate, inclusiv plățile.
-     
-  3. Zborurile:
-    - Fiecare zbor este identificat unic printr-un cod (ex. RO101).
-    - Se cunosc ruta, ora plecării, durata zborului, capacitatea avionului, și numărul de locuri disponibile.
-    - Se pot organiza două tipuri de zboruri:
-      - Zboruri interne: preț bilet calculat ca (50 RON + 0.5 RON/km).
-      - Zboruri internaționale: preț bilet calculat ca (200 RON + 1RON/km).
-        
-  4. Pasagerii:
-    - Fiecare pasager are un nume, un cod unic (CNP), și o listă de rezervări anterioare. CNP-ul trebuie să respecte formatul unui CNP românesc.
-    - Pasagerii trebuie să aibă un cont creat în sistem (username și parola unice).
-    - Dacă pasagerul nu este autentificat, poate doar să vadă lista zborurilor disponibile.
-     
-  6. Rezervările:
-    - O rezervare este asociată unui pasager, unui zbor, și unui număr de locuri rezervate.
-    - Se calculează costul total în funcție de numărul de locuri rezervate și tipul zborului.
+Un sistem software implementat în C# (aplicație consolă) pentru gestionarea rezervării de zboruri ale unei companii aeriene. Sistemul permite gestionarea zborurilor, înregistrarea clienților, realizarea rezervărilor și calcularea costurilor.
 
-  ## Funcționalități
-  Sistemul trebuie să permită:
-  1. Autentificare și înregistrare:
-    o Înregistrarea unui nou cont de pasager.
-    o Autentificarea utilizatorilor existenți.
-  2. Gestionare zboruri (doar pentru administratori):
-    o Adăugare zbor nou.
-    o Ștergere zbor.
-    o Vizualizare lista completă de zboruri.
-    o Actualizare informații despre zboruri (ex: ora plecării, capacitatea).
-    o Vizualizare rute disponibile
-    o Adăugare/ștergere rute
-  3. Rezervări pentru pasageri:
-    o Vizualizare lista de zboruri disponibile (cu locuri libere).
-    o Rezervare locuri pe un zbor specific.
-    o Anulare rezervare.
-    o Vizualizare istoricul rezervărilor proprii.
-  4. Rapoarte și statistici (doar pentru administratori):
-    o Vizualizare zboruri cu cele mai multe locuri rezervate.
-    o Vizualizare veniturile generate de un zbor.
-    o Generare raport zilnic al veniturilor totale.
-    o Vizualizarea tuturor plăților efectuate de un pasager.
-      
-  ## Cerințe Tehnice
-  1. Nota maximă 8:
-    o Crearea unui model OO clar, utilizând corect principiile POO (încapsulare, moștenire, polimorfism, compoziție).
-    o Salvarea și încărcarea stării aplicației într-un fișier.
-    o Tratarea erorilor (ex: fișier inexistent, date invalide, locuri insuficiente pentru rezervare).
-    o Utilizarea GitHub pentru colaborare între membri, cu commit-uri relevante și bine descrise.
-    o Prezentarea design-ului și evoluției aplicației (slide-uri PPT).
+## Contextul Sistemului
 
-  3. Nota maximă 10:
-    o Toate cerințele de mai sus.
-    o Izolarea funcționalităților externe folosind clase învelitoare (wrapper) pentru interacțiunea cu fișiere și consola.
-    o Utilizarea .NET Core GenericHost pentru gestionarea dependențelor.
-    o Implementarea unui mecanism de logging folosind ILogger.
+### 1. Compania aeriană:
+- **Informații generale:**
+  - Nume.
+  - Flotă de avioane.
+  - Listă de rute disponibile (oraș de plecare, oraș de destinație, număr de kilometri).
+- **Funcționalități:**
+  - Permite rezervarea biletelor pentru pasageri.
+  - Înregistrează toate rezervările efectuate și plățile aferente.
 
-  5. Opțional (puncte bonus):
-    o Stocarea alternativă a datelor într-o bază de date SQL.
-    o Utilizarea expresiilor LINQ pentru manipularea colecțiilor.
-    o Adăugarea unui mecanism de notificare prin email (simulat) pentru pasageri (ex: notificare pentru plata restantă).
-    o Implementarea modelului arhitectural MVC.
-    o Crearea unor teste unitare pentru validarea funcționalității aplic
+### 2. Zborurile:
+- **Identificare:** Fiecare zbor are un cod unic (ex. `RO101`).
+- **Atribute:** Ruta, ora plecării, durata, capacitatea avionului, numărul de locuri disponibile.
+- **Tipuri de zboruri:**
+  - **Zboruri interne:** Preț bilet = `50 RON + 0.5 RON/km`.
+  - **Zboruri internaționale:** Preț bilet = `200 RON + 1 RON/km`.
+
+### 3. Pasagerii:
+- **Atribute:** Nume, CNP (format românesc), listă de rezervări anterioare.
+- **Autentificare:** Cont format din username și parolă unice.
+- **Restricții:** Pasagerii neautentificați pot doar vizualiza lista zborurilor disponibile.
+
+### 4. Rezervările:
+- Asociate unui pasager, unui zbor și unui număr de locuri rezervate.
+- Cost total calculat în funcție de numărul de locuri și tipul zborului.
+
+## Funcționalități
+
+### 1. Autentificare și înregistrare:
+- Înregistrare cont nou de pasager.
+- Autentificare utilizator existent.
+
+### 2. Gestionare zboruri (administratori):
+- Adăugare, ștergere și actualizare zboruri.
+- Vizualizare lista completă de zboruri și rute disponibile.
+- Adăugare/ștergere rute.
+
+### 3. Rezervări pentru pasageri:
+- Vizualizare lista de zboruri disponibile.
+- Rezervare/anulare locuri pe un zbor.
+- Vizualizare istoricul rezervărilor proprii.
+
+### 4. Rapoarte și statistici (administratori):
+- Zboruri cu cele mai multe locuri rezervate.
+- Venituri generate de un zbor.
+- Raport zilnic al veniturilor totale.
+- Vizualizare plăți efectuate de un pasager.
+
+## Cerințe Tehnice
+
+### Pentru nota maximă 8:
+- Model OO clar, respectând principiile POO (încapsulare, moștenire, polimorfism, compoziție).
+- Salvarea/încărcarea stării aplicației într-un fișier.
+- Tratarea erorilor (fișier inexistent, date invalide, locuri insuficiente).
+- Utilizarea GitHub pentru colaborare (commit-uri relevante).
+- Prezentarea design-ului și evoluției aplicației (slide-uri PPT).
+
+### Pentru nota maximă 10:
+- Cerințele de mai sus.
+- Izolarea funcționalităților externe (wrapper pentru fișiere și consolă).
+- Utilizarea .NET Core GenericHost pentru gestionarea dependențelor.
+- Mecanism de logging cu `ILogger`.
+
+### Opțional (bonus):
+- Stocarea datelor într-o bază de date SQL.
+- Utilizarea LINQ pentru manipularea colecțiilor.
+- Mecanism de notificare prin email (simulat).
+- Implementarea modelului arhitectural MVC.
+- Crearea de teste unitare pentru validarea funcționalităților.
